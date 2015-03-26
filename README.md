@@ -11,6 +11,7 @@ PeerJS Server is started on port no `3000`.<br>
 <b>Running the Application</b><br>
 Requires Node and npm to be installed as prerequisite
 <ol>
+<li> `npm install -g gulp slush bower slush-wean` [you may require to install yo dependency as well]</li>
 <li>Use `npm install` to install the dependencies from `package.json` file</li>
 <li>Execute application with the help of gulp or nodewebkit<br>
 `gulp run` or `nw .` at the root of project.
