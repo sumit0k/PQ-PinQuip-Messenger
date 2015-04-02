@@ -1,0 +1,60 @@
+<div class="card bgc-teal-500 tc-white-1 pb+">
+	<div class="toolbar">
+		<div class="toolbar__left mr+">
+			<img src="/images/flat.png" width="60" height="60">
+		</div>
+
+		<span class="toolbar__label fs-display-1">PinQuip Messenger</span>
+		<lx-search-filter model="searchFilter.second" position="right" theme="dark" closed placeholder="Search" class="mr+"></lx-search-filter>
+		<button class="btn btn--m btn--blue btn--fab mr+" lx-ripple lx-tooltip="New Chat" tooltip-position="bottom"><i class="mdi mdi-comment-plus-outline"></i></button>
+    <button class="btn btn--m btn--green btn--fab mr+" lx-ripple lx-tooltip="New Group" tooltip-position="bottom"><i class="mdi mdi-account-multiple-plus"></i></button>
+    <button class="btn btn--m btn--orange btn--fab mr" lx-ripple lx-tooltip="New Broadcast" tooltip-position="bottom"><i class="mdi mdi-theater"></i></button>
+		<lx-dropdown position="right" from-top="true">
+		<button class="btn btn--l btn--white btn--icon" lx-ripple lx-dropdown-toggle lx-tooltip="Options" tooltip-position="bottom">
+			<i class="mdi mdi-dots-vertical"></i>
+		</button>
+
+		<lx-dropdown-menu>
+		<ul>
+			<li><a class="dropdown-link">Contacts</a></li>
+			<li><a class="dropdown-link">Settings</a></li>
+			<li><a class="dropdown-link">Status</a></li>
+			<li class="dropdown-divider"></li>
+			<li><a class="dropdown-link">Help</a></li>
+			<li ng-click="opendDialog('server_select')"><a class="dropdown-link">Change Server</a></li>
+		</ul>
+	</lx-dropdown-menu>
+</lx-dropdown>
+<div class="fab">
+	<button class="fab__primary btn btn--xl btn--red btn--fab" lx-ripple>
+		<i class="mdi mdi-plus"></i>
+		<i class="mdi mdi-chevron-left"></i>
+	</button>
+
+	<div class="fab__actions fab__actions--left ">
+		<button class="btn btn--l btn--black btn--fab " id='windowControlMinimize' lx-ripple lx-tooltip="Minimise" tooltip-position="bottom"><i class="mdi mdi-minus"></i></button>
+		<button class="btn btn--l btn--black btn--fab" id='windowControlMaximize' lx-ripple lx-tooltip="Maximise" tooltip-position="bottom"><i class="mdi mdi-monitor"></i></button>
+		<button class="btn btn--l btn--black btn--fab" id='windowControlFullscreen' lx-ripple lx-tooltip="FullScreen" tooltip-position="bottom"><i class="mdi mdi-fullscreen"></i></button>
+		<button class="btn btn--l btn--black btn--fab" id='windowControlRotate' lx-ripple lx-tooltip="Rotate" tooltip-position="bottom"><i class="mdi mdi-sync"></i></button>
+		<button class="btn btn--l btn--black btn--fab" id='windowControlClose' lx-ripple lx-tooltip="Close" tooltip-position="bottom"><i class="mdi mdi-close"></i></button>
+
+	</div>
+</div>
+</div>
+</div>
+ <!-- dialog for selecting custom server. starts when forms loads -->
+<lx-dialog class="dialog dialog--l" id="server_select" onclose="closingDialog()">
+    <div class="dialog__header">
+        <div class="toolbar bgc-light-blue-500 pl++">
+            <span class="toolbar__label tc-white fs-title">
+               Server
+            </span>
+            </div>
+        </div>
+     <div class="dialog__content">
+        <p class="p++">Lorem Ipsum Dolor</p>
+     </div>
+         <div class="dialog__actions">
+        <button class="btn btn--m btn--black btn--flat" lx-ripple lx-dialog-close>Proceed</button>
+    </div>
+    </lx-dialog>
