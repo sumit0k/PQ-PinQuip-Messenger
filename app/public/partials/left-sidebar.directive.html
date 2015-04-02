@@ -1,0 +1,62 @@
+<div id="side" class="pane pane-list" >
+  <header class="pane-header">
+    <div class="toolbar bgc-green-400 tc-white-1">
+      <div class="toolbar__left">
+        <div class="avatar" id="icon-user-default">
+          <img ng-src="{{myImage}}" src="/images/DP/s.jpg" class="img-round">
+        </div>
+      </div>
+      <span class="toolbar__label fs-title"></span>
+      <div class="toolbar__right">
+        <button class="btn btn--m btn--blue btn--fab mr" lx-ripple lx-tooltip="New Chat" tooltip-position="bottom"><i class="mdi mdi-comment-plus-outline"></i></button>
+        <button class="btn btn--m btn--amber btn--fab mr" lx-ripple lx-tooltip="New Group" tooltip-position="bottom"><i class="mdi mdi-account-multiple-plus"></i></button>
+        <button class="btn btn--m btn--orange btn--fab mr" lx-ripple lx-tooltip="New Broadcast" tooltip-position="bottom"><i class="mdi mdi-theater"></i></button>
+        <lx-dropdown position="right" from-top="false">
+          <button class="btn btn--l btn--white btn--icon" lx-ripple lx-dropdown-toggle lx-tooltip="Options" tooltip-position="bottom"><i class="mdi mdi-dots-vertical"></i></button>
+          <lx-dropdown-menu >
+            <ul>
+              <li><a class="dropdown-link">Contacts</a></li>
+              <li><a class="dropdown-link">Settings</a></li>
+              <li><a class="dropdown-link">Status</a></li>
+              <li class="dropdown-divider"></li>
+              <li><a class="dropdown-link">Help</a></li>
+              <li ng-click="opendDialog('server_select')"><a class="dropdown-link">Change Server</a></li>
+            </ul>
+          </lx-dropdown-menu>
+        </lx-dropdown>
+      </div>
+    </div>
+  </header>
+  <div class="pane-subheader subheader-search">
+    <lx-search-filter model="searchFilter.second" position="right" theme="light" filter-width="100%" placeholder="Search"></lx-search-filter>
+  </div>
+  <div class="pane-body" id="pane-side" lx-scrollbar style="max-height: 500px;" >
+    <ul class="list mt" >
+      <li class="list-row list-row--has-separator" ng-repeat="contact in Contacts" ng-class="{active: left.isSelected({{contact.id}})}" ng-click="left.selectTab({{contact.id}})">
+        <div class="list-row__primary">
+          <img ng-src="{{contact.image}}" src="/images/DP/s.jpg" width="55" height="55" class="img-round">
+        </div>
+        <div class="list-row__content">
+          <span class="display-block">{{contact.name}}</span>
+          <span class="display-block fs-body-1 tc-black-2">{{contact.lastmessage}}</span>
+        </div>
+        <div class="list-row__secondary">
+          <div class="fab">
+            <button class="fab__primary btn btn--xl btn--red btn--fab" lx-ripple lx-tooltip="Lorem Ipsum" tooltip-position="top">
+              <i class="mdi mdi-menu-left"></i>
+              <i class="mdi mdi-plus"></i>
+            </button>
+
+            <div class="fab__actions fab__actions--left">
+              <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="Delete Conversation" tooltip-position="top"><i class="mdi mdi-delete"></i></button>
+              <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="Archive Conversation" tooltip-position="top"><i class="mdi mdi-package"></i></button>
+              <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="Clear Conversation" tooltip-position="top"><i class="mdi mdi-multiplication"></i></button>
+              <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="Email Conversation" tooltip-position="top"><i class="mdi mdi-link"></i></button>
+              <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="Block Contact" tooltip-position="top"><i class="mdi mdi-block-helper"></i></button>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
