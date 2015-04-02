@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html ng-app="pinquip-messenger" >
+   <head>
+		<title>PQ: PinQuip Messenger</title>
+		<!-- LUMX UI Framework -->
+		<link rel="stylesheet" href="libs/lumx/dist/lumx.css">
+		<!-- MDI Icon CSS -->
+		<link rel="stylesheet" href="libs/mdi/css/materialdesignicons.css">
+		<!-- Main Application CSS -->
+		<link rel="stylesheet" href="css/app.css">
+
+		<!-- Scripts -->
+		<script src="libs/jquery/dist/jquery.min.js"></script>
+		<script src="libs/velocity/velocity.min.js"></script>
+		<script src="libs/velocity/velocity.ui.min.js"></script>
+		<script src="libs/moment/min/moment-with-locales.js"></script>
+		<script src="libs/angular/angular.min.js"></script>
+		<script src="libs/lumx/dist/lumx.min.js"></script>
+		<!-- PeerJS Script for PeerJS client -->
+		<script src="libs/peer.js"></script>
+		<!-- Font Script for supporting different devices -->
+		<script src="libs/webfont.js"></script>
+		<!-- Main App Script -->
+		<script src="js/app-main.js"></script>
+		<!-- Custom Directives -->
+		<script src="js/header-bar.directive.js"></script>
+		<script src="js/message-body.directive.js"></script>
+		<script src="js/left-sidebar.directive.js"></script>
+		<script src="js/pane-footer.directive.js"></script>
+		<script src="js/right-sidebar.directive.js"></script>
+		<!-- Script for Peer functionality -->
+		<script src="js/pq-videochat.directive.js"></script>
+
+		<!-- Emoji Area CSS -->
+		<link rel="stylesheet" href="css/jquery.emojiarea.css">
+		<!-- Emoji Parser for texts around the application -->
+		<script src="js/packs/jquery.emoji.js"></script>
+		<!-- EmojiArea creator -->
+		<script src="js/packs/jquery.emojiarea.js"></script>
+		<!-- Emoji Database separated in groups -->
+		<script src="js/packs/basic/emojis.js"></script>
+		<!-- Group Icons -->
+		<link rel="stylesheet" href="fontello/css/fontello.css">
+   </head>
+	<body class="ui">
+		<div class="app-wrapper">
+			<!-- main header bar containing the window controls -->
+			<header-bar></header-bar>
+			<!-- Application Body containg all the contents -->
+			<div class="app" ng-class="{two:infoBar===0,three:infoBar===1}" ng-controller="MainCtrl">
+				<!-- left sidebar comprises 30% on pc and when used in mobile should reduce to 10% showing just the pictures and an option to expand hiding message view contains collapse button too -->
+				<left-sidebar></left-sidebar>
+				<!-- message window coprises 70% on pc -->
+				<message-body></message-body>
+				<!-- Right sidebar for contact info and settings menu -->
+				<right-sidebar></right-sidebar>
+			</div>
+		</div>
+		<!-- Contains all the Dialog Boxes Used in Application -->
+		<dialog-boxes></dialog-boxes>
+	</body>
+</html>
