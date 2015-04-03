@@ -1,5 +1,5 @@
-var dbDetails = new PouchDB("http://localhost:3000/database/dbDetails"),
-	dbMessages = new PouchDB("http://localhost:3000/database/dbMessages");
+var dbDetails = new PouchDB("https://pinquip.herokuapp.com/database/dbDetails"),
+	dbMessages = new PouchDB("https://pinquip.herokuapp.com/database/dbMessages");
 //Using remote PouchDB database over http
 //var dbremote = new PouchDB('http://' + serverip + ':3000/db/dbDetails');
 var servers = {
@@ -15,7 +15,7 @@ var servers = {
 		"_id": "server",
 		"title": "Server Details",
 		"active": "192.168.1.6",
-		"central": "piku-app.heroku-app.com",
+		"central": "https://pinquip.herokuapp.com/",
 		"myip": "192.168.1.7"
 	},
 	mydetails = {
