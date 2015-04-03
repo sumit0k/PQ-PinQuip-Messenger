@@ -28,7 +28,7 @@ $nvc.directive('pqVideoChat', ['LxDialogService', 'LxNotificationService', '$sce
 				serverip = 'pinquip-peerjs.herokuapp.com';
 			}
 			var userid = '';
-			//userid=prompt("Enter your userid, empty string for new ID","sumitkumar1209");
+			userid=prompt("Enter your userid, empty string for new ID","sumitkumar1209");
 			if (userid === null || userid === '') {
 				// New peer connection with our server provides userid
 				peer = new Peer({　
