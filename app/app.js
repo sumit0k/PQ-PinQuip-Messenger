@@ -5,13 +5,7 @@ var express = require('express'),
 	cookieParser = require('cookie-parser'),
 	bodyParser = require('body-parser'),
 	PouchDB = require('pouchdb'),
-	PeerServer = require('peer').PeerServer,
 	routes = require('./routes'),
-	// creating a PeerJS server at port 9000
-	pserver = new PeerServer({
-		port: 9000,
-		path: ''
-	}),
 	//initialising the app
 	app = express();
 // view engine setup
