@@ -27,11 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', routes.index);
 //creating a database file for handling all the databases
 //doubt in whether to use single database and multiple tables or multiple database with relevant tables
-app.use('/database', require('express-pouchdb')(PouchDB, {
-	overrideMode: {
-		include: ['fauxton']
-	}
-}));
+app.use('/database', require('express-pouchdb')(PouchDB));
 // getting port for expressJS server 3000
 // process.env.PORT for heroku
 app.set('port', process.env.PORT || 3000);
