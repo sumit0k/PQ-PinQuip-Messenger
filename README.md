@@ -4,9 +4,16 @@ A `M.E.A.N.` stack based messenger application using PeerJS server
 The project is scaffolded using gulp, slush-wean and bower. The UI is developed in LUMX using AngularJS. The Project still not uses MongoDB so as to fulfill the requirement of packaged application.
 
 <b>General Information</b><br>
-Express Server is started on port no `9000`.<br>
-PeerJS Server is started on port no `3000`.<br>
+`Express Server` is started on port no `3000`.<br>
+`EJS` is used for HTML renderer for ExpressJS<br>
+`PeerJS Server` is started on port no `9000`.<br>
 `IndexedDB` is used for database purposes.<br>
+`PouchDB` is used as wrapper for IndexedDB<br>
+`blueimp-file-upload` is used for FTP over express server.<br>
+`AngularJS` is used for creating modules for front-end.<br>
+`LUMX` is used as UI framework.<br>
+`jQuery is used for DOM Manipulation`.<br>
+`Velocity` is used for smoother animations.<br>
 
 <b>Running the Application</b><br>
 Requires Node and npm to be installed as prerequisite
