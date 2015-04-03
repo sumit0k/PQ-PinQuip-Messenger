@@ -6,7 +6,10 @@
 	"globals": {
 		"angular": false,
 		"$nvc": false,
-		"Peer": false
+		"Peer": false,
+		"dbDetails": false,
+		"dbMessages": false,
+		"PouchDB": false
 	},
 	"undef": true,
 	"globalstrict": true,
