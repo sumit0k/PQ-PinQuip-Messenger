@@ -1,34 +1,15 @@
 {
   "name": "PinQuip-Videochat",
   "version": "0.0.1",
-  "private": true,
-  "main": "./app/index.html",
   "dependencies": {
     "body-parser": "~1.0.0",
     "cookie-parser": "~1.0.1",
     "debug": "~0.7.4",
     "ejs": "~0.8.5",
     "express": "^4.x.x",
-    "mongodb": "^1.4.34",
-    "mongojs": "^0.18.2",
     "peer": "0.2.8"
   },
-  "devDependencies": {
-    "gulp": "^3.8.7",
-    "gulp-shell": "^0.2.9",
-    "node-webkit-builder": "^1.0.8"
-  },
-  "single-instance": false,
-  "window": {
-    "title": "PinQuip Messenger",
-    "toolbar": true,
-    "frame": false,
-    "position": "center",
-    "fullscreen": false,
-    "resizable": false,
-    "width": 1320,
-    "height": 720,
-    "icon": "/app/public/logo-square-128.png"
-  },
-  "node-remote": "<local>"
+  "scripts":{
+    "start":"node app/app.js"
+  }
 }
