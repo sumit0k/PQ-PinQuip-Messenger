@@ -25,7 +25,7 @@ $nvc.directive('pqVideoChat', ['LxDialogService', 'LxNotificationService', '$sce
 			var peer;
 			//serverip = prompt("Enter Server IP address", "localhost");
 			if (serverip === null || serverip === '') {
-				serverip = 'localhost';
+				serverip = 'pinquip-peerjs.herokuapp.com';
 			}
 			var userid = '';
 			//userid=prompt("Enter your userid, empty string for new ID","sumitkumar1209");
@@ -33,8 +33,8 @@ $nvc.directive('pqVideoChat', ['LxDialogService', 'LxNotificationService', '$sce
 				// New peer connection with our server provides userid
 				peer = new Peer({　
 					host: serverip,
-					secure: false,
-					port: 9000,
+					secure: true,
+					port: 443,
 					path: '',
 					debug: 3
 				});
@@ -42,8 +42,8 @@ $nvc.directive('pqVideoChat', ['LxDialogService', 'LxNotificationService', '$sce
 				// New peer connection with our custom id
 				peer = new Peer(userid, {　
 					host: serverip,
-					secure: false,
-					port: 9000,
+					secure: true,
+					port: 443,
 					path: '',
 					debug: 3
 				});
