@@ -1,0 +1,5 @@
+{
+	"name": "PinQuip-Messenger",
+	"version": "0.0.1",
+	"description": "A M.E.A.N. stack based messenger application using PeerJS server"
+}

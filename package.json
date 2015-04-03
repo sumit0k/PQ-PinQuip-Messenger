@@ -1,19 +1,32 @@
 {
-  "name": "PinQuip-Videochat",
-  "version": "0.0.1",
-  "description":"A M.E.A.N. stack based messenger application using PeerJS server",
-  "dependencies": {
-    "blueimp-file-upload-node": "^2.1.0",
-    "body-parser": "~1.0.0",
-    "cookie-parser": "~1.0.1",
-    "debug": "~0.7.4",
-    "ejs": "~0.8.5",
-    "express": "^4.x.x",
-    "express-pouchdb": "^0.14.0",
-    "peer": "0.2.8",
-    "pouchdb": "^3.3.1"
-  },
-"scripts":{
-    "start":"node app/app.js"
-  }
+	"name": "PinQuip-Messenger",
+	"version": "0.0.1",
+	"description": "A M.E.A.N. stack based messenger application using PeerJS server",
+	"dependencies": {
+		"blueimp-file-upload-node": "^2.1.0",
+		"body-parser": "~1.0.0",
+		"cookie-parser": "~1.0.1",
+		"debug": "~0.7.4",
+		"ejs": "~0.8.5",
+		"express": "^4.x.x",
+		"express-pouchdb": "^0.14.0",
+		"peer": "0.2.8",
+		"pouchdb": "^3.3.1"
+	},
+	"scripts": {
+		"start": "node app/app.js"
+	},
+	"repositories": {
+		"type": "git",
+		"url": "https://github.com/sumitkumar1209/PQ-PinQuip-Messenger.git",
+		"path": "/"
+	},
+	"maintainers": {
+		"name": "Sumit Kumar",
+		"email": "sumitkumar1209@gmail.com",
+		"web": "http://sumit.sundreems.com"
+	},
+	"bugs": {
+		"url": "https://github.com/sumitkumar1209/PQ-PinQuip-Messenger/issues"
+	}
 }
