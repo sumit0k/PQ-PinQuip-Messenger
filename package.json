@@ -1,6 +1,7 @@
 {
   "name": "PinQuip-Videochat",
   "version": "0.0.1",
+  "description":"A M.E.A.N. stack based messenger application using PeerJS server",
   "dependencies": {
     "blueimp-file-upload-node": "^2.1.0",
     "body-parser": "~1.0.0",
