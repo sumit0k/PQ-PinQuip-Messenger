@@ -1,0 +1,24 @@
+<footer >
+  <div class="block-compose tc-black-2 bgc-blue-grey-200">
+      <button class="btn btn--l btn--grey btn--icon btn-emoji" lx-ripple><i class="mdi mdi-emoticon"></i></button>
+       <div class="input-container" id="compose-input" lx-scrollbar>
+         <div contenteditable="true" class="emojis-wysiwyg" ng-bind="message">
+        </div>
+        <textarea  ng-model="footer.message" style="width: 100%"></textarea>
+      </div>
+     <button class="btn btn--xl btn--white btn--icon icon-ptt" lx-ripple ng-click="footer.sendMessage()"><i class="mdi mdi-comment-account-outline"></i></button>
+  </div>
+</footer>
+<script>
+// Emoji TextArea Parser
+//$('.emojis-plain').emojiarea({wysiwyg: false});
+var $wysiwyg = $('.emojis-wysiwyg').emojiarea({wysiwyg: true});
+var $wysiwyg_value = $('#emojis-wysiwyg-value');
+$wysiwyg.on('change', function() {
+  $wysiwyg_value.text($(this).val());
+});
+$wysiwyg.trigger('change');
+$('.emojitext').each(function(i, d){
+    $(d).emoji();
+});
+</script>

@@ -20,6 +20,49 @@ ol,ul {
 html, body{
 	height:100%;
 }
+.fab__actions--left{
+    right:35px;
+    bottom: 0px;
+}
+..card__img--top span{
+      text-shadow: 0 0 9px #000000;
+}
+.ng-cloak {
+    display: none;
+}
+
+[flex-container=row] > [flex-item] {
+  height: 100%;
+}
+div#profile {
+  height: calc(100% - 65px);
+}
+div#main {
+  height: 100%;
+}
+div#side{
+  height: 100%;
+}
+div#pane-side {
+  height: calc(100% - 104px);
+  max-height: calc(100% - 104px);
+}
+div#pane-side>ul {
+    height: calc(100% - 104px);
+max-height: calc(100% - 104px);
+}
+.block-compose .icon-ptt {
+  position: absolute !important;
+  bottom: -3px;
+  right: -5px;
+
+}
+#side li{
+cursor: pointer;
+}
+span.fs-title.tc-white-1.display-block.ng-binding {
+  text-shadow: 0 0 3px black;
+}
 /*background for outer window*/
 body {
     background-color: #dfdfdf;
@@ -89,7 +132,7 @@ header img{
 .app {
     height: calc(100% - 100px);
     position: relative;
-    margin: 0 auto;
+    margin: 10px auto;
     top: 0px;
     z-index: 2;
     border-radius: 3px;
@@ -99,9 +142,10 @@ header img{
     transform-origin: center;
     -webkit-animation: app-enter .3s;
     animation: app-enter .3s;
-    background-position: top left;
+    animation-delay: 2s;
+/*    background-position: top left;
     background-repeat: repeat-x;
-    background-color: #f7f7f7
+    background-color: #f7f7f7*/
 }
 /*animation*/
 @-webkit-keyframes app-enter {
@@ -117,7 +161,19 @@ header img{
         opacity: 1
     }
 }
+@-webkit-keyframes app-exit {
+    from {
+        -webkit-transform: scale(.7);
+        transform: scale(.7);
+        opacity: 0
+    }
 
+    to {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: 1
+    }
+}
 @keyframes app-enter {
     from {
         -webkit-transform: scale(1.3);
@@ -149,7 +205,6 @@ header img{
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
-    overflow: hidden
 }
 /*custom-------------------------------------
 #side{
@@ -161,7 +216,7 @@ header img{
 }
 /*-------------------------------*/
 .pane-header{
-	
+
 	top:0;
 }
 .pane-header,.pane-subheader {
@@ -182,7 +237,6 @@ header img{
     padding: 0;
 }
 .pane-chat-header:after,.subheader-search:after {
-    position: absolute;
     content: '';
     width: 100%;
     height: 1px;
@@ -190,13 +244,6 @@ header img{
     bottom: -1px;
     background-color: rgba(255,255,255,.14);
     border-bottom: 1px solid rgba(0,0,0,.08)
-}
-.pane-body {
-    -webkit-box-flex: 1;
-    -webkit-flex-grow: 1;
-    -ms-flex-positive: 1;
-    flex-grow: 1;
-    overflow-x: hidden;
 }
 /*check now```````````````````````````````````*/
 /*will check later*/
@@ -218,6 +265,7 @@ header img{
 }
 
 .app .pane-chat,.app .drawer-container-right,.app .pane-intro {
+    position: absolute;
     -webkit-transform-origin: left top;
     -ms-transform-origin: left top;
     transform-origin: left top
@@ -275,7 +323,7 @@ header img{
 
     .three .pane-chat,.three .drawer-container-right,.three .pane-intro {
         z-index: 1;
-        width: 40%
+        width: 35%;
     }
 
     .pane-info,.drawer-container-panel {
@@ -340,8 +388,8 @@ header img{
 }
 
 .avatar {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center
@@ -499,8 +547,8 @@ header img{
     background-color: rgba(255,255,255,.6)
 }
 #pane-main{
-	overflow-y:scroll;
-	max-height: 500px;
+    height:calc(100% - 114px);
+	max-height:calc(100% - 114px);
 }
 .pane-chat-body {
     display: -webkit-box;
@@ -513,10 +561,9 @@ header img{
     -ms-flex-direction: column;
     flex-direction: column;
     overflow-x: hidden;
-
     position: relative;
     z-index: 100;
-    padding: 17px 9% 8px
+    padding: 17px 2% 8px
 }
 .more {
     margin: 8px 0 24px
@@ -612,9 +659,11 @@ header img{
     line-height: 20px;
     font-size: 15px;
     border: none;
-    padding: 5px 6px;
+    padding: 5px 6px 5px 35px;
     width: 100%;
-    outline: none
+    outline: none;
+    max-height: 140px;
+        min-height: 20px;
 }
 
 ::-webkit-input-placeholder {
@@ -768,8 +817,11 @@ header img{
 }
 
 .block-compose {
-    padding: 10px 70px 10px 62px;
-    position: relative
+    padding: 10px 40px 10px 10px;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    z-index:999;
 }
 
 .block-compose .input-container {
@@ -783,19 +835,14 @@ header img{
     background-color: rgba(255,255,255,.55)
 }
 
-.block-compose .icon-send,.block-compose .icon-ptt {
-    position: absolute;
-    bottom: 18px;
-    right: 20px
-}
-
 .block-compose .icon-send {
     opacity: .9
 }
 
 .block-compose .btn-emoji {
-    position: absolute;
-    left: 20px
+    position: absolute !important;
+    bottom: 3px;
+    left: 5px;
 }
 
 .block-compose .icon-ptt {

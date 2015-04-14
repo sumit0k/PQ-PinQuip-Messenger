@@ -1,78 +1,122 @@
 <!DOCTYPE html>
-<html ng-app="pq-videochat" >
+<html ng-app="pinquip-messenger" >
    <head>
-      <title>PQ Video Chat</title>
-      <link rel="stylesheet" href="libs/lumx/dist/lumx.css">
-      <link rel="stylesheet" href="libs/mdi/css/materialdesignicons.css">
-      <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
-
-      <link rel="stylesheet" href="css/app.css">
-      <!--<link rel="stylesheet" href="css/trial.css">-->
-      
-      <script src="libs/jquery/dist/jquery.min.js"></script>
-      <script src="libs/velocity/velocity.min.js"></script>
-      <script src="libs/moment/min/moment-with-locales.js"></script>
-     
-      <script src="libs/angular/angular.min.js"></script>
-      <script src="libs/lumx/dist/lumx.min.js"></script>
-      <script src="js/peer.js"></script>
-      <script src="js/app.js"></script>
-      <script src="js/pq-videochat.directive.js"></script>
-      <script src="js/webfont.js"></script>
-
-    <link rel="stylesheet" href="js/jquery.emojiarea.css">
-<!-- <script src="js/jquery-1.8.2.min.js"></script>  -->
-    <script src="js/jquery.emoji.js"></script>
-    <script src="js/jquery.emojiarea.js"></script>
-    <script src="js/packs/basic/emojis.js"></script>
-    <link rel="stylesheet" href="fontello/css/fontello.css">
+		<title>PQ: PinQuip Messenger</title>
+		<!-- LUMX UI Framework -->
+		<link rel="stylesheet" href="libs/lumx/dist/lumx.css">
+		<!-- MDI Icon CSS -->
+		<link rel="stylesheet" href="libs/mdi/css/materialdesignicons.css">
+		<!-- Main Application CSS -->
+		<link rel="stylesheet" href="css/app.css">
+		<!-- File Upload CSS -->
+		<!-- <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.css"> -->
+		<!-- <link rel="stylesheet" href="css/style.css"> -->
+		<!-- blueimp Gallery styles -->
+		<link rel="stylesheet" href="libs/blueimp-gallery/css/blueimp-gallery.css">
+		<!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
+		<link rel="stylesheet" href="css/jquery.fileupload.css">
+		<link rel="stylesheet" href="css/jquery.fileupload-ui.css">
+		<!-- CSS adjustments for browsers with JavaScript disabled -->
+		<noscript><link rel="stylesheet" href="css/jquery.fileupload-noscript.css"></noscript>
+		<noscript><link rel="stylesheet" href="css/jquery.fileupload-ui-noscript.css"></noscript>
+		<!-- Scripts -->
+		<script src="libs/jquery/dist/jquery.min.js"></script>
+		<!-- <script src="libs/file/jquery.ui.widget.js"></script> -->
+		<script src="libs/velocity/velocity.min.js"></script>
+		<script src="libs/velocity/velocity.ui.min.js"></script>
+		<script src="libs/moment/min/moment-with-locales.js"></script>
+		<script src="libs/angular/angular.min.js"></script>
+		<script src="libs/angular/angular-cookie.js"></script>
+		<!-- <script src="libs/angular-moment/angular-moment.min.js"></script> -->
+		<script src="libs/lumx/dist/lumx.js"></script>
+		<!-- PouchDB script for pouchdb wrapper for indexed DB -->
+		<script src="libs/pouchdb-3.3.1.min.js"></script>
+		<!-- <script src="libs/pouchdb.quick-search.min.js"></script> -->
+		<script src="js/angular-pouchdb.js"></script>
+		<!-- DexieJS script for dexie wrapper for indexed DB -->
+		<!-- <script src="libs/Dexie.js"></script> -->
+		<!-- PeerJS Script for PeerJS client -->
+		<script src="libs/peer.js"></script>
+		<!-- Font Script for supporting different devices -->
+		<script src="libs/webfont.js"></script>
    </head>
-   <body class="ui">
-   <div class="app-wrapper">
-   <!-- header of application common for every window and fixed -->
-   <header >
-<div class="card bgc-teal-500 tc-white-1 pb+">
-    <div class="toolbar bgc-teal-500 tc-white-1">
-    <div class="toolbar__left">
-      <img src="/images/flat.png" width="50" height="50">
+	<body class="ui" >
+		<div class="app-wrapper">
+			<!-- main header bar containing the window controls -->
+			<header-bar></header-bar>
+			<!-- Lumx new body Application Body containg all the contents -->
+			<div class="app tc-white-1" flex-container="row" ng-controller="MainCtrl" ng-init="ip='<%= ip %>'">
+			<!-- left sidebar comprises 30% on pc and when used in mobile should reduce to 10% showing just the pictures and an option to expand hiding message view contains collapse button too-->
+				<div flex-item="3" flex-item-order="1"><left-sidebar></left-sidebar></div>
+				<!-- message window coprises 70% on pc-->
+			  <div flex-item="6" flex-item-order="2"><message-body></message-body></div>
+			  <!-- Right sidebar for contact info and settings menu -->
+			  <div flex-item="3" flex-item-order="3"><right-sidebar></right-sidebar></div>
+			<lx-dialog class="dialog dialog--l" id="register">
+		<div class="dialog__header bgc-light-blue-500 pl++">
+        <div class="toolbar bgc-light-blue-500 pl++">
+            <span class="toolbar__label tc-white fs-title">
+               Enter Your Details
+            </span>
+            </div>
     </div>
-    <span class="toolbar__label fs-title"></span>
-    <button class="btn btn--m btn--orange btn--raised mr" id='windowControlMinimize' lx-ripple lx-tooltip="Minimise" tooltip-position="bottom"><i class="mdi mdi-minus"></i></button>
-    <button class="btn btn--m btn--blue btn--raised mr" id='windowControlMaximize' lx-ripple lx-tooltip="Maximise" tooltip-position="bottom"><i class="mdi mdi-monitor"></i></button>
-    <button class="btn btn--m btn--green btn--raised mr" id='windowControlFullscreen' lx-ripple lx-tooltip="FullScreen" tooltip-position="bottom"><i class="mdi mdi-fullscreen"></i></button>
-    <button class="btn btn--m btn--amber btn--raised mr" id='windowControlRotate' lx-ripple lx-tooltip="Rotate" tooltip-position="bottom"><i class="mdi mdi-sync"></i></button>
-    <button class="btn btn--m btn--red btn--raised mr" id='windowControlClose' lx-ripple lx-tooltip="Close" tooltip-position="bottom"><i class="mdi mdi-close"></i></button>
+    <div class="dialog__content p++">
+    <div flex-container="row" flex-gutter="24">
+        <div flex-item>
+            <lx-text-field label="First name" icon="account">
+                <input type="text" ng-model="firstName">
+            </lx-text-field>
+        </div>
+
+        <div flex-item>
+            <lx-text-field label="Last name">
+                <input type="text" ng-model="lastName">
+            </lx-text-field>
+        </div>
+    </div>
+        <div flex-container="row" flex-gutter="24" icon="email">
+        <div flex-item>
+            <lx-text-field label="Email" error="!emailValidation(email)">
+                <input type="email" ng-model="email">
+            </lx-text-field>
+        </div>
+
+        <div flex-item>
+            <lx-text-field label="Phone Number" icon="phone">
+                <input type="text" ng-model="phone">
+            </lx-text-field>
+        </div>
+    </div>
+        <div flex-container="row" flex-gutter="24">
+        <div flex-item>
+            <lx-text-field label="Organisation" icon="city">
+                <input type="text" ng-model="organisation">
+            </lx-text-field>
+        </div>
+
+        <div flex-item>
+            <lx-text-field label="Designation" >
+                <input type="text" ng-model="designation">
+            </lx-text-field>
+        </div>
+    </div>
+    <div flex-container="row" flex-gutter="24">
+        <div flex-item>
+            <lx-text-field label="Username">
+                <input type="text" ng-model="username">
+            </lx-text-field>
+        </div>
+            <div flex-item>
+        <lx-file-input label="Profile Picture" onchange="angular.element(this).scope().uploadFile(this.files[0])" accept="image/jpg"></lx-file-input>
     </div>
     </div>
-</header>
-      <div class="app two" ng-controller="MessageController as message" ng-init="tab=1">
-      <!-- left sidebar__ comprises 30% on pc and when used in mobile should reduce to 10% showing just the pictures and an option to expand hiding message view contains collapse button too -->
-         <div id="side" class="pane pane-list" ><header class="pane-header">
-<div class="toolbar bgc-green-400 tc-white-1">
-<div class="toolbar__left">
-  <div class="avatar" id="icon-user-default"> <img src="/images/DP/s.jpg" class="img-round"></div>
-</div>
-    <span class="toolbar__label fs-title"></span>
-    <div class="toolbar__right" ng-controller="DialogCtrl">
-    <button class="btn btn--m btn--blue btn--fab mr" lx-ripple lx-tooltip="New Chat" tooltip-position="bottom"><i class="mdi mdi-comment-plus-outline"></i></button>
-    <button class="btn btn--m btn--amber btn--fab mr" lx-ripple lx-tooltip="New Group" tooltip-position="bottom"><i class="mdi mdi-account-multiple-plus"></i></button>
-    <button class="btn btn--m btn--orange btn--fab mr" lx-ripple lx-tooltip="New Broadcast" tooltip-position="bottom"><i class="mdi mdi-theater"></i></button>
-    <lx-dropdown position="right" from-top="false">
-    <button class="btn btn--l btn--white btn--icon" lx-ripple lx-dropdown-toggle lx-tooltip="Options" tooltip-position="bottom">
-      <i class="mdi mdi-dots-vertical"></i>
-    </button>
-        <lx-dropdown-menu >
-    <ul>
-      <li><a class="dropdown-link">Contacts</a></li>
-      <li><a class="dropdown-link">Settings</a></li>
-      <li><a class="dropdown-link">Status</a></li>
-      <li class="dropdown-divider"></li>
-      <li><a class="dropdown-link">Help</a></li>
-      <li ng-click="opendDialog('server_select')"><a class="dropdown-link">Change Server</a></li>
-    </ul>
-  </lx-dropdown-menu>
-</lx-dropdown>
-<lx-dialog class="dialog dialog--l" id="server_select" onclose="closingDialog()">
+    </div>
+        <div class="dialog__actions">
+        <button class="btn btn--m btn--black btn--flat" ng-click="register()" lx-ripple lx-dialog-close>Register</button>
+    </div>
+		</lx-dialog>
+		<!-- Dialog Box for Entering the Server IP -->
+<lx-dialog class="dialog dialog--l" id="server" >
     <div class="dialog__header">
         <div class="toolbar bgc-light-blue-500 pl++">
             <span class="toolbar__label tc-white fs-title">
@@ -81,475 +125,57 @@
             </div>
         </div>
      <div class="dialog__content">
-        <p class="p++">Enter the Server's IP Address (default localhost)
+        <p class="p++">Enter the Server's IP Address (default localhost to create new)
         <lx-text-field label="Server Address">
-            <input type="text" ng-model="textFields.ServerName">
+            <input type="text" ng-model="ServerName">
         </lx-text-field></p>
      </div>
-         <div class="dialog__actions">
-        <button class="btn btn--m btn--black btn--flat" lx-ripple lx-dialog-close>Proceed</button>
-    </div>
+     <div class="dialog__actions">
+       <button  class="btn btn--m btn--black btn--flat" lx-ripple ng-click="server(ServerName)" lx-dialog-close>Proceed</button>
+     </div>
+</lx-dialog>
+ <lx-dialog class="dialog dialog--l" id="statusServer">
+        <div class="dialog__content p++">
+            <span class="fs-subhead display-block text-center">{{handler.statusMsg}}</span>
+        </div>
     </lx-dialog>
-</div>
-</div>
-</header>
-<div class="pane-subheader subheader-search"><lx-search-filter model="searchFilter.second" position="right" theme="light" filter-width="100%" placeholder="Search"></lx-search-filter></div>
-<div class="pane-body" id="pane-side" lx-scrollbar style="max-height: 500px;" >
-<ul class="list mt" >
-  <li class="list-row list-row--has-separator" ng-class="{ active:message.isSelected(1) }" ng-click="tab=1">
-    <div class="list-row__primary">
-      <img src="/images/DP/s.jpg" width="55" height="55" class="img-round">
-    </div>
+			</div>
+		</div>
 
-    <div class="list-row__content">
-      <span class="display-block">Two-line item</span>
-      <span class="display-block fs-body-1 tc-black-2">Secondary text</span>
-    </div>
 
-    <div class="list-row__secondary">
-      <i class="icon icon--xs icon--grey icon--flat mdi mdi-dots-horizontal"></i>
-    </div>
-  </li>
-  <li class="list-row list-row--has-separator" ng-class="{ active:message.isSelected(2) }" ng-click="tab = 2">
-    <div class="list-row__primary">
-      <img src="/images/DP/k.jpg" width="55" height="55" class="img-round">
-    </div>
-
-    <div class="list-row__content">
-      <span class="display-block">Two-line item</span>
-      <span class="display-block fs-body-1 tc-black-2">Secondary text</span>
-    </div>
-    <div class="list-row__secondary">
-      <i class="icon icon--xs icon--grey icon--flat mdi mdi-dots-horizontal"></i>
-    </div>
-  </li>
-  <li class="list-row list-row--has-separator" ng-class="{ active:message.isSelected(3)}" ng-click="tab = 3">
-    <div class="list-row__primary">
-      <img src="/images/DP/v.jpg" width="55" height="55" class="img-round">
-    </div>
-    <div class="list-row__content">
-      <span class="display-block">Two-line item</span>
-      <span class="display-block fs-body-1 tc-black-2">Secondary text</span>
-    </div>
-    <div class="list-row__secondary">
-      <i class="icon icon--xs icon--grey icon--flat mdi mdi-dots-horizontal"></i>
-    </div>
-  </li>
-  <li class="list-row list-row--has-separator">
-    <div class="list-row__primary">
-      <img src="/images/DP/s.jpg" width="55" height="55" class="img-round">
-    </div>
-
-    <div class="list-row__content">
-      <span class="display-block">Two-line item</span>
-      <span class="display-block fs-body-1 tc-black-2">Secondary text</span>
-    </div>
-    <div class="list-row__secondary">
-      <div class="fab">
-        <button class="fab__primary btn btn--xl btn--red btn--fab" lx-ripple lx-tooltip="Lorem Ipsum" tooltip-position="top">
-          <i class="mdi mdi-android"></i>
-          <i class="mdi mdi-plus"></i>
-        </button>
-
-        <div class="fab__actions fab__actions--left">
-          <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="Lorem Ipsum" tooltip-position="top"><i class="mdi mdi-delete"></i></button>
-          <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="Lorem Ipsum" tooltip-position="top"><i class="mdi mdi-package"></i></button>
-          <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="Lorem Ipsum" tooltip-position="top"><i class="mdi mdi-pencil"></i></button>
-        </div>
-      </div>
-    </li>
-<li class="list-row list-row--has-separator">
-  <div class="list-row__primary">
-    <img src="/images/DP/v.jpg" width="40" height="40" class="img-round">
-  </div>
-
-  <div class="list-row__content">
-    <span class="display-block">Two-line item</span>
-    <span class="display-block fs-body-1 tc-black-2">Secondary text</span>
-  </div>
-  <lx-dropdown position="right">
-  <div class="list-row__secondary">
-    <button class="btn btn--l btn--black btn--icon" lx-ripple lx-dropdown-toggle>
-      <i class="mdi mdi-dots-vertical"></i>
-    </button>
-  </div>
-  <lx-dropdown-menu>
-  <ul>
-    <li><a class="dropdown-link">Action</a></li>
-    <li><a class="dropdown-link">Another action</a></li>
-    <li><a class="dropdown-link">Something else here</a></li>
-    <li class="dropdown-divider"></li>
-    <li><a class="dropdown-link dropdown-link--is-header">Header</a></li>
-    <li><a class="dropdown-link">Separated link</a></li>
-  </ul>
-</lx-dropdown-menu>
-</lx-dropdown>
-</li>
-</ul>
-</div>
-<!-- dialog for selecting custom server. starts when forms loads -->
-</div>
-    <!-- message window -->
-         <div id="main" class="pane pane-chat" ><header class="pane-header pane-chat-header">
-  <div class="toolbar bgc-green-600 tc-white-1">
-  <div class="toolbar__left">
-  <div class="avatar"><img src="/images/DP/v.jpg" class="img-round"></div>
-</div>
-    <span class="toolbar__label fs-title"></span>
-    <div class="toolbar__right">
-     <button class="btn btn--m btn--blue btn--fab mr" lx-ripple lx-tooltip="Video Call" tooltip-position="bottom"><i class="mdi mdi-play-box-outline"></i></button>
-    <button class="btn btn--m btn--amber btn--fab mr" id="close" lx-ripple lx-tooltip="Audio Call" tooltip-position="bottom"><i class="mdi mdi-phone" ></i></button>
-       <div class="fab">
-  <button class="fab__primary btn btn--l btn--red btn--fab" lx-ripple>
-    <i class="mdi mdi-attachment"></i>
-    <i class="mdi mdi-chevron-down"></i>
-  </button>
-
-  <div class="fab__actions fab__actions--bottom ">
-    <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="File" tooltip-position="bottom"><i class="mdi mdi-file"></i></button>
-    <button class="btn btn--l btn--black btn--fab"  lx-ripple lx-tooltip="Image" tooltip-position="bottom"><i class="mdi mdi-message-image"></i></button>
-    <button class="btn btn--l btn--black btn--fab"  lx-ripple lx-tooltip="Video" tooltip-position="bottom"><i class="mdi mdi-message-video"></i></button>
-    <button class="btn btn--l btn--black btn--fab"  lx-ripple lx-tooltip="Audio" tooltip-position="bottom"><i class="mdi mdi-microphone"></i></button>
-    <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="Contact" tooltip-position="bottom"><i class="mdi mdi-account-box"></i></button>
-  </div>
-  </div>
-    <lx-dropdown position="right" from-top="false">
-    <button class="btn btn--l btn--white btn--icon" lx-ripple lx-dropdown-toggle lx-tooltip="Options" tooltip-position="bottom">
-      <i class="mdi mdi-dots-vertical"></i>
-    </button>
-        <lx-dropdown-menu>
-    <ul>
-      <li onclick="$('.drawer-container').velocity({'left':'70%'});$('#main').velocity({'width':'40%'});"><a class="dropdown-link" >Contact Info</a></li>
-      <li><a class="dropdown-link">Block</a></li>
-      <li><a class="dropdown-link">Status</a></li>
-      <li class="dropdown-divider"></li>
-      <li><a class="dropdown-link">Email Conversation</a></li>
-      <li><a class="dropdown-link">Clear Conversation</a></li>
-      <li><a class="dropdown-link">Delete Conversation</a></li>
-      <li><a class="dropdown-link">Archive Conversation</a></li>
-    </ul>
-  </lx-dropdown-menu>
-</lx-dropdown>
-</div>
-</div>
-</header>
-<div id="pane-main" class="pane-body pane-chat-body lastTabIndex" lx-scrollbar>
-  <div class="pane-chat-empty"></div>
-  <div class="more"></div>
-  <div class="btn-more" title="Load earlier messages..."> </div>
-    <span class="icon icon-refresh"></span>
-    <div class="message-list" ng-show="tab===1">
-      <div class="msg">
-        <div class="message message-system">
-          <span class="message-system-body">
-            <span class="emojitext">MARCH 13, 2015</span>
-          </span>
-        </div>
-      </div>
-      <div class="msg">
-        <div class="message message-in">
-          <div class="bubble bubble-text">
-            <div class="message-text">
-              
-                <span class="emojitext"><pre>Hi there!</pre></span>
-              
-              <div class="message-meta">
-                <span></span>
-                <span class="message-datetime">12:56 AM</span>
-                <span></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="msg">
-        <div class="message message-in">
-          <div class="bubble bubble-text">
-            <div class="message-text">
-              <span class="emojitext"><pre>Hi there!</pre></span>
-              <div class="message-meta">
-                <span></span>
-                <span class="message-datetime">12:56 AM</span>
-                <span></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="msg">
-        <div class="message message-out">
-          <div class="bubble bubble-text">
-            <div class="message-text">
-                <span class="emojitext"><pre>Hey! :laughing: :+1:</pre></span>
-              <div class="message-meta">
-                <span></span>
-                <span class="message-datetime">12:57 AM</span>
-                <span></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="msg">
-        <div class="message message-out">
-          <div class="bubble bubble-text">
-            <div class="message-text">
-                <span class="emojitext"><pre>Hey!</pre></span>
-              <div class="message-meta">
-                <span></span>
-                <span class="message-datetime">12:57 AM</span>
-                <span></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="msg">
-        <div class="message message-in">
-          <div class="bubble bubble-text">
-            <div class="message-text">
-              
-                <span class="emojitext"><pre>Hi there!</pre></span>
-              
-              <div class="message-meta">
-                <span></span>
-                <span class="message-datetime">12:56 AM</span>
-                <span></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-        <div class="message-list" ng-show="tab===2">
-      <div class="msg">
-        <div class="message message-system">
-          <span class="message-system-body">
-            <span class="emojitext">MARCH 14, 2015</span>
-          </span>
-        </div>
-      </div>
-      <div class="msg">
-        <div class="message message-in">
-          <div class="bubble bubble-text">
-            <div class="message-text">
-              <pre>
-                <span class="emojitext">Hi Sumit!</span>
-              </pre>
-              <div class="message-meta">
-                <span></span>
-                <span class="message-datetime">12:56 AM</span>
-                <span></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="msg">
-        <div class="message message-out">
-          <div class="bubble bubble-text">
-            <div class="message-text">
-              <pre>
-                <span class="emojitext">Hey!</span>
-              </pre>
-              <div class="message-meta">
-                <span></span>
-                <span class="message-datetime">12:57 AM</span>
-                <span></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="msg">
-        <div class="message message-in">
-          <div class="bubble bubble-text">
-            <div class="message-text">
-              <pre>
-                <span class="emojitext">Hi there!</span>
-              </pre>
-              <div class="message-meta">
-                <span></span>
-                <span class="message-datetime">12:56 AM</span>
-                <span></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="msg">
-        <div class="message message-out">
-          <div class="bubble bubble-text">
-            <div class="message-text">
-              <pre>
-                <span class="emojitext">Hey!</span>
-              </pre>
-              <div class="message-meta">
-                <span></span>
-                <span class="message-datetime">12:57 AM</span>
-                <span></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="msg">
-        <div class="message message-in">
-          <div class="bubble bubble-text">
-            <div class="message-text">
-              <pre>
-                <span class="emojitext">Hi there!</span>
-              </pre>
-              <div class="message-meta">
-                <span></span>
-                <span class="message-datetime">12:56 AM</span>
-                <span></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-        <div class="message-list" ng-show="tab===3">
-      <div class="msg">
-        <div class="message message-system">
-          <span class="message-system-body">
-            <span class="emojitext">MARCH 15, 2015</span>
-          </span>
-        </div>
-      </div>
-      <div class="msg">
-        <div class="message message-in">
-          <div class="bubble bubble-text">
-            <div class="message-text">
-              <pre>
-                <span class="emojitext">Hi there Vikash!</span>
-              </pre>
-              <div class="message-meta">
-                <span></span>
-                <span class="message-datetime">12:56 AM</span>
-                <span></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="msg">
-        <div class="message message-out">
-          <div class="bubble bubble-text">
-            <div class="message-text">
-              <pre>
-                <span class="emojitext">Hey!</span>
-              </pre>
-              <div class="message-meta">
-                <span></span>
-                <span class="message-datetime">12:57 AM</span>
-                <span></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="msg">
-        <div class="message message-in">
-          <div class="bubble bubble-text">
-            <div class="message-text">
-              <pre>
-                <span class="emojitext">Hi there!</span>
-              </pre>
-              <div class="message-meta">
-                <span></span>
-                <span class="message-datetime">12:56 AM</span>
-                <span></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="msg">
-        <div class="message message-out">
-          <div class="bubble bubble-text">
-            <div class="message-text">
-              <pre>
-                <span class="emojitext">Hey!</span>
-              </pre>
-              <div class="message-meta">
-                <span></span>
-                <span class="message-datetime">12:57 AM</span>
-                <span></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="msg">
-        <div class="message message-in">
-          <div class="bubble bubble-text">
-            <div class="message-text">
-              <pre>
-                <span class="emojitext">Hi there!</span>
-              </pre>
-              <div class="message-meta">
-                <span></span>
-                <span class="message-datetime">12:56 AM</span>
-                <span></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-</div>
-<footer class="pane-footer pane-chat-footer">
-  <div class="block-compose">
-    <button class="btn btn--m btn--blue btn--icon btn-emoji" lx-ripple><i class="mdi mdi-emoticon"></i></button>
-    <div class="input-container" id="compose-input">
-      <div contenteditable="true" class="input emojis-wysiwyg" placeholder="type a message"></div>
-    </div>
-<!--     <div >
-      <span>
-        <button class="btn btn--m btn--blue btn--icon btn-stickers" lx-ripple><i class="mdi mdi-tag-faces"></i></button>
-      </span>
-    </div> -->
-    <div>
-    <span>
-      
-    </span> 
-    </div>
-  </div>
-</footer></div>           
-         <div class="pane drawer-container drawer-container-left drawer-container-panel bgc-white-1" style="position:absolute; left:100%; z-index: 10;" ><div class="drawer drawer-info "><header class="pane-header">
-    <div class="toolbar bgc-orange-400 tc-white-1">
-  <div class="toolbar__left">
-  <button class="btn btn--m btn--blue btn--fab mr back" lx-ripple lx-tooltip="Back" tooltip-position="bottom"><i class="mdi mdi-chevron-left"></i></button>
-</div>
-    <span class="toolbar__label fs-title"></span>
-    <div class="toolbar__right">
-    <button class="btn btn--m btn--green btn--fab mr" onclick="$('.drawer-container').velocity({'left':'100%'});$('#main').velocity({'width':'70%'});" lx-ripple lx-tooltip="Close" tooltip-position="bottom"><i class="mdi mdi-close"></i></button>
-</div>
-</header>
-<div class="pane-subheader">Vikash Kumar</div>
-<div align="center">
-<img src="/images/DP/v.jpg" class="img-round" width="200" height="200"></div>
-<div class="emojitext">feeling happy :smile: :smile: :smile: :smile: :laughing: :snowman:</div>
-</div></div>
-         <pq-video-chat></pq-video-chat>
-      </div>
-      </div>
-      <script>    
-    $('.emojis-plain').emojiarea({wysiwyg: false});
-    
-    var $wysiwyg = $('.emojis-wysiwyg').emojiarea({wysiwyg: true});
-    var $wysiwyg_value = $('#emojis-wysiwyg-value');
-    
-    $wysiwyg.on('change', function() {
-      $wysiwyg_value.text($(this).val());
-    });
-    $wysiwyg.trigger('change');
-    </script>
-        <script type="text/javascript">
-      $('.emojitext').each(function(i, d){
-    $(d).emoji();
-  });</script>
-   </body>
+		<!-- Main App Script -->
+		<script src="js/blueimp-angular.js"></script>
+		<script src="js/app-main.js"></script>
+		<!-- Custom Directives -->
+		<script src="js/header-bar.directive.js"></script>
+		<script src="js/message-body.directive.js"></script>
+		<script src="js/left-sidebar.directive.js"></script>
+		<script src="js/pane-footer.directive.js"></script>
+		<script src="js/right-sidebar.directive.js"></script>
+		<script src="js/pouchDB-Populate.js"></script>
+		<!-- Angular Scripts -->
+		<!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+		<script src="libs/blueimp-load-image/js/load-image.all.min.js"></script>
+		<!-- The Canvas to Blob plugin is included for image resizing functionality -->
+		<script src="libs/blueimp-canvas-to-blob/js/canvas-to-blob.min.js"></script>
+		<!-- blueimp Gallery script -->
+		<script src="libs/blueimp-gallery/js/jquery.blueimp-gallery.min.js"></script>
+		<script src="libs/uploader.min.js"></script>
+		<!-- <script src="js/blueimp-angular.js"></script> -->
+		<script src="js/nguploadform.directive.js"></script>
+		<!-- <script src="js/db-populate.js"></script> -->
+		<!-- Script for Peer functionality -->
+		<script src="js/pq-videochat.directive.js"></script>
+				<!-- Emoji Area CSS -->
+		<link rel="stylesheet" href="css/jquery.emojiarea.css">
+		<!-- Emoji Parser for texts around the application -->
+		<script src="js/packs/jquery.emoji.js"></script>
+		<!-- EmojiArea creator -->
+		<script src="js/packs/jquery.emojiarea.js"></script>
+		<!-- Emoji Database separated in groups -->
+		<script src="js/packs/basic/emojis.js"></script>
+		<!-- Group Icons -->
+		<link rel="stylesheet" href="fontello/css/fontello.css">
+	</body>
 </html>
+

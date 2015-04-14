@@ -1,5 +1,5 @@
 /*
- LumX v0.3.17
+ LumX v0.3.25
  (c) 2014-2015 LumApps http://ui.lumapps.com
  License: MIT
 */
@@ -159,12 +159,12 @@ angular.module('lumx.date-picker', [])
             $datePicker = element.find('.lx-date-picker');
             $datePickerContainer = element;
 
-            self.build(locale);
+            self.build(locale, false);
         };
 
-        this.build = function(locale)
+        this.build = function(locale, isNewModel)
         {
-            if (locale === activeLocale)
+            if (locale === activeLocale && !isNewModel)
             {
                 return;
             }
@@ -354,7 +354,12 @@ angular.module('lumx.date-picker', [])
 
                 attrs.$observe('locale', function()
                 {
-                    ctrl.build(checkLocale(attrs.locale));
+                    ctrl.build(checkLocale(attrs.locale), false);
+                });
+
+                scope.$watch('model', function()
+                {
+                    ctrl.build(checkLocale(attrs.locale), true);
                 });
 
                 function checkLocale(locale)
@@ -446,6 +451,7 @@ angular.module('lumx.dialog', [])
 
                 scopeMap[dialogId].isOpened = false;
                 dialogHeight = undefined;
+                scopeMap[dialogId].$destroy();
             }, 600);
         };
 
@@ -588,6 +594,7 @@ angular.module('lumx.dropdown', [])
     {
         var dropdown,
             dropdownMenu;
+        var dropdownMenuHeight;
 
         $scope.isOpened = false;
         $scope.isDropped = false;
@@ -629,73 +636,122 @@ angular.module('lumx.dropdown', [])
             });
         }
 
+        function fromTop(toTop)
+        {
+            if (angular.isUndefined($scope.overToggle) && angular.isDefined($scope.fromTop))
+            {
+                return $scope.fromTop === 'true';
+            }
+
+            if ($scope.overToggle === 'true')
+            {
+                return !toTop;
+            }
+            else
+            {
+                return toTop;
+            }
+        }
+
         function setDropdownMenuCss()
         {
-            var top,
-                bottom,
-                left = 'auto',
-                right = 'auto';
-
-            if (angular.isDefined($scope.fromTop))
-            {
-                top = dropdown.offset().top;
-                bottom = $window.innerHeight - dropdown.offset().top;
-            }
-            else
-            {
-                top = dropdown.offset().top + dropdown.outerHeight();
-                bottom = $window.innerHeight - dropdown.offset().top - dropdown.outerHeight();
-            }
-
-            if ($scope.position === 'left')
-            {
-                left = dropdown.offset().left;
-            }
-            else if ($scope.position === 'right')
-            {
-                right = $window.innerWidth - (dropdown.offset().left + dropdown.outerWidth());
-            }
-            else if ($scope.position === 'center')
-            {
-                left = (dropdown.offset().left - (dropdownMenu.outerWidth() / 2)) + (dropdown.outerWidth() / 2);
-            }
-
-            if ($scope.direction === 'up')
-            {
-                dropdownMenu.css(
-                    {
-                        left: left,
-                        right: right,
-                        bottom: bottom
-                    });
-            }
-            else
-            {
-                dropdownMenu.css(
-                {
-                    left: left,
-                    right: right,
-                    top: top
-                });
-            }
+            var dropdownMenuWidth = dropdownMenu.outerWidth();
+            dropdownMenuHeight = dropdownMenu.outerHeight();
+            var origin = {
+                x: dropdown.offset().left,
+                y: dropdown.offset().top + dropdown.outerHeight()
+            };
+            var width = dropdownMenuWidth;
+            var height, bottomOffset, topOffset;
 
             if (angular.isDefined($scope.width))
             {
                 if ($scope.width === 'full')
                 {
-                    dropdownMenu.css('width', dropdown.outerWidth());
+                    width = dropdown.outerWidth();
                 }
                 else
                 {
-                    dropdownMenu.css('width', dropdown.outerWidth() + parseInt($scope.width));
+                    width = dropdown.outerWidth() + parseInt($scope.width);
+                }
+            }
+
+            if ($scope.position === 'right')
+            {
+                origin.x = $window.innerWidth - (dropdown.offset().left + dropdown.outerWidth());
+            }
+            else if ($scope.position === 'center')
+            {
+                origin.x = dropdown.offset().left + (dropdown.outerWidth() - width) / 2;
+            }
+
+            if (origin.y + dropdownMenuHeight >= $window.innerHeight && origin.y - dropdownMenuHeight > 0)
+            { // To top
+                bottomOffset = fromTop(true) ? dropdown.outerHeight() : 0;
+
+                if (bottomOffset && origin.y - bottomOffset - dropdownMenuHeight <= 0)
+                {
+                    height = origin.y - bottomOffset - 8;
+                }
+
+                dropdownMenu.css(
+                {
+                    left: $scope.position !== 'right' ? origin.x : undefined,
+                    right: $scope.position === 'right' ? origin.x : undefined,
+                    bottom: $window.innerHeight - origin.y + bottomOffset,
+                    width: width,
+                    height: height
+                });
+            }
+            else if (origin.y + dropdownMenuHeight < $window.innerHeight)
+            { // To bottom
+                topOffset = fromTop(false) ? -dropdown.outerHeight() : 0;
+
+                dropdownMenu.css(
+                {
+                    left: $scope.position !== 'right' ? origin.x : undefined,
+                    right: $scope.position === 'right' ? origin.x : undefined,
+                    top: origin.y + topOffset,
+                    width: width
+                });
+            }
+            else // Dropdown too big, check the biggest space between up or down and use it with a padding
+            {
+                if (origin.y > $window.innerHeight / 2) // Middle of the screen
+                { // To top
+                    bottomOffset = fromTop(true) ? dropdown.outerHeight() : 0;
+                    height = origin.y - 8;
+
+                    dropdownMenu.css(
+                    {
+                        left: $scope.position !== 'right' ? origin.x : undefined,
+                        right: $scope.position === 'right' ? origin.x : undefined,
+                        bottom: $window.innerHeight - origin.y + bottomOffset,
+                        width: width,
+                        height: height - bottomOffset
+                    });
+                }
+                else
+                { // To bottom
+                    topOffset = fromTop(false) ?  -dropdown.outerHeight() : 0;
+                    height = $window.innerHeight - origin.y - 8;
+
+                    dropdownMenu.css(
+                    {
+                        left: $scope.position !== 'right' ? origin.x : undefined,
+                        right: $scope.position === 'right' ? origin.x : undefined,
+                        top: origin.y + topOffset,
+                        width: width,
+                        height: height - topOffset
+                    });
                 }
             }
         }
 
         function openDropdownMenu()
         {
-            var dropdownMenuWidth = dropdownMenu.outerWidth(),
-                dropdownMenuHeight = dropdownMenu.outerHeight();
+            var width = dropdownMenu.outerWidth();
+            var height = dropdownMenu.outerHeight();
 
             dropdownMenu.css({
                 width: 0,
@@ -704,12 +760,12 @@ angular.module('lumx.dropdown', [])
             });
 
             dropdownMenu.find('.dropdown-dropdownMenu__content').css({
-                width: dropdownMenuWidth,
-                height: dropdownMenuHeight
+                width: width,
+                height: height
             });
 
             dropdownMenu.velocity({
-                width: dropdownMenuWidth
+                width: width
             }, {
                 duration: 200,
                 easing: 'easeOutQuint',
@@ -717,20 +773,25 @@ angular.module('lumx.dropdown', [])
             });
 
             dropdownMenu.velocity({
-                height: dropdownMenuHeight
+                height: height
             }, {
                 duration: 500,
                 easing: 'easeOutQuint',
                 queue: false,
                 complete: function()
                 {
-                    if (angular.isDefined($scope.width))
+                    if (height === dropdownMenuHeight)
                     {
                         dropdownMenu.css({ height: 'auto' });
                     }
                     else
                     {
-                        dropdownMenu.css({ width: 'auto', height: 'auto' });
+                        dropdownMenu.css({ overflow: 'auto' });
+                    }
+
+                    if (!angular.isDefined($scope.width))
+                    {
+                        dropdownMenu.css({ width: 'auto' });
                     }
 
                     dropdownMenu.find('.dropdown-menu__content').removeAttr('style');
@@ -804,7 +865,7 @@ angular.module('lumx.dropdown', [])
                 position: '@',
                 width: '@',
                 fromTop: '@',
-                direction: '@'
+                overToggle: '@'
             },
             link: function(scope, element, attrs, ctrl)
             {
@@ -1931,6 +1992,16 @@ angular.module('lumx.select', [])
             return $scope.loading !== 'true' && !hasNoResults() && !filterNeeded();
         }
 
+        function isChoicesArray()
+        {
+            return angular.isArray($scope.choices());
+        }
+
+        function trust(data)
+        {
+            return $sce.trustAsHtml(data);
+        }
+
         /**
          * Return the array of selected elements. Always return an array (ie. returns an empty array in case
          * selected list is undefined in the scope).
@@ -2129,6 +2200,8 @@ angular.module('lumx.select', [])
         $scope.getSelectedElements = getSelectedElements;
         $scope.getSelectedTemplate = getSelectedTemplate;
         $scope.hasNoResults = hasNoResults;
+        $scope.isChoicesArray = isChoicesArray;
+        $scope.trust = trust;
     }])
     .directive('lxSelect', function()
     {
@@ -2229,7 +2302,7 @@ angular.module('lumx.select', [])
                 {
                     modelToSelection(attrs.modelToSelection);
                 }
-                
+
                 attrs.$observe('modelToSelection', modelToSelection);
             }
         };
@@ -2538,6 +2611,10 @@ angular.module('lumx.tabs', [])
 
 
 angular.module('lumx.text-field', [])
+    .filter('unsafe', ['$sce', function($sce)
+    {
+        return $sce.trustAsHtml;
+    }])
     .directive('lxTextField', ['$timeout', function($timeout)
     {
         return {
@@ -2881,10 +2958,11 @@ angular.module("lumx.dropdown").run(['$templateCache', function(a) { a.put('drop
     '');
 	 }]);
 angular.module("lumx.file-input").run(['$templateCache', function(a) { a.put('file-input.html', '<div class="input-file">\n' +
-    '    <span class="input-file__label">{{ label }}</span>\n' +
+    '    <span class="input-file__label" ng-bind-html="label | unsafe"></span>\n' +
     '    <span class="input-file__filename"></span>\n' +
     '    <input type="file">\n' +
-    '</div>');
+    '</div>\n' +
+    '');
 	 }]);
 angular.module("lumx.text-field").run(['$templateCache', function(a) { a.put('text-field.html', '<div class="text-field text-field--{{ theme }}-theme"\n' +
     '     ng-class="{ \'text-field--is-valid\': valid(),\n' +
@@ -2895,9 +2973,7 @@ angular.module("lumx.text-field").run(['$templateCache', function(a) { a.put('te
     '                 \'text-field--is-focused\': data.focused,\n' +
     '                 \'text-field--label-hidden\': fixedLabel() && data.model,\n' +
     '                 \'text-field--with-icon\': icon && fixedLabel() }">\n' +
-    '    <label class="text-field__label">\n' +
-    '        {{ label }}\n' +
-    '    </label>\n' +
+    '    <label class="text-field__label" ng-bind-html="label | unsafe"></label>\n' +
     '\n' +
     '    <div class="text-field__icon" ng-if="icon && fixedLabel() ">\n' +
     '        <i class="mdi mdi-{{ icon }}"></i>\n' +
@@ -2920,20 +2996,20 @@ angular.module("lumx.search-filter").run(['$templateCache', function(a) { a.put(
 angular.module("lumx.select").run(['$templateCache', function(a) { a.put('select.html', '<div class="lx-select"\n' +
     '     ng-class="{ \'lx-select--is-unique\': !multiple,\n' +
     '                 \'lx-select--is-multiple\': multiple }">\n' +
-    '    <lx-dropdown width="32" from-top>\n' +
+    '    <lx-dropdown width="32" over-toggle="true">\n' +
     '        <div ng-transclude="parent"></div>\n' +
     '    </lx-dropdown>\n' +
     '</div>\n' +
     '');
 	a.put('select-selected.html', '<div lx-dropdown-toggle>\n' +
-    '    <span class="lx-select__floating-label" ng-if="getSelectedElements().length !== 0 && floatingLabel">{{ placeholder }}</span>\n' +
+    '    <span class="lx-select__floating-label" ng-if="getSelectedElements().length !== 0 && floatingLabel" ng-bind-html="trust(placeholder)"></span>\n' +
     '\n' +
     '    <div class="lx-select__selected"\n' +
     '         ng-class="{ \'lx-select__selected--is-unique\': !multiple,\n' +
     '                     \'lx-select__selected--is-multiple\': multiple && getSelectedElements().length > 0,\n' +
     '                     \'lx-select__selected--placeholder\': getSelectedElements().length === 0 }"\n' +
     '         lx-ripple>\n' +
-    '        <span ng-if="getSelectedElements().length === 0">{{ placeholder }}</span>\n' +
+    '        <span ng-if="getSelectedElements().length === 0" ng-bind-html="trust(placeholder)"></span>\n' +
     '\n' +
     '        <!-- ng-repeat is used to manage the initialization of the $select even for non-multiple selects -->\n' +
     '        <div ng-repeat="$selected in getSelectedElements()" ng-if="!multiple">\n' +
@@ -2947,7 +3023,8 @@ angular.module("lumx.select").run(['$templateCache', function(a) { a.put('select
     '            </div>\n' +
     '        </div>\n' +
     '    </div>\n' +
-    '</div>');
+    '</div>\n' +
+    '');
 	a.put('select-choices.html', '<lx-dropdown-menu class="lx-select__choices">\n' +
     '    <ul ng-if="!tree">\n' +
     '        <li ng-if="getSelectedElements().length > 0">\n' +
@@ -2967,7 +3044,19 @@ angular.module("lumx.select").run(['$templateCache', function(a) { a.put('select
     '            <span ng-if="hasNoResults() && !filterNeeded()">No results!</span>\n' +
     '        </li>\n' +
     '\n' +
-    '        <li ng-repeat="$choice in choices() | filter:data.filter" ng-if="isChoicesVisible()">\n' +
+    '        <li ng-repeat="$choice in choices() | filter:data.filter" ng-if="isChoicesVisible() && isChoicesArray()">\n' +
+    '            <a class="lx-select__choice dropdown-link"\n' +
+    '               ng-class="{ \'lx-select__choice--is-multiple\': multiple,\n' +
+    '                           \'lx-select__choice--is-selected\': isSelected($choice) }"\n' +
+    '               ng-click="toggle($choice, $event)"\n' +
+    '               ng-transclude="child"></a>\n' +
+    '        </li>\n' +
+    '\n' +
+    '        <li ng-repeat-start="($subheader, children) in choices()" ng-if="isChoicesVisible() && !isChoicesArray()">\n' +
+    '            <span class="dropdown-link dropdown-link--is-header" ng-bind-html="trust($subheader)"></span>\n' +
+    '        </li>\n' +
+    '\n' +
+    '        <li ng-repeat-end ng-repeat="$choice in children | filter:data.filter" ng-if="isChoicesVisible() && !isChoicesArray()">\n' +
     '            <a class="lx-select__choice dropdown-link"\n' +
     '               ng-class="{ \'lx-select__choice--is-multiple\': multiple,\n' +
     '                           \'lx-select__choice--is-selected\': isSelected($choice) }"\n' +
@@ -2979,7 +3068,8 @@ angular.module("lumx.select").run(['$templateCache', function(a) { a.put('select
     '            <i class="mdi mdi-reload"></i>\n' +
     '        </li>\n' +
     '    </ul>\n' +
-    '</lx-dropdown-menu>');
+    '</lx-dropdown-menu>\n' +
+    '');
 	 }]);
 angular.module("lumx.tabs").run(['$templateCache', function(a) { a.put('tabs.html', '<div class="tabs tabs--theme-{{ linksTc }} tabs--layout-{{ layout }}"\n' +
     '     ng-class="{ \'tabs--no-divider\': noDivider }">\n' +

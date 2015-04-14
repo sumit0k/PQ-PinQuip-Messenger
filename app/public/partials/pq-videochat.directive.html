@@ -1,4 +1,4 @@
-<div class="p+++">
+<!-- <div class="p+++">
     <span class="fs-subhead display-block text-center">Your ID : {{id}}</span>
     <div flex-container="column" flex-align="space-between center">
         <div flex-item flex-gutter="24">
@@ -8,26 +8,32 @@
                 </lx-text-field>
             </div>
         </div>
-    </div>
-
+    </div> -->
+<!-- Dialog Box for Video Calling -->
+    <lx-dialog class="dialog dialog--l" id="videos">
+        <div class="dialog__content p++">
+            <span class="fs-subhead display-block text-center">
     <div class="mt++" flex-container="row" flex-gutter="24" ng-show="callInProgress">
         <div flex-item="4">
             <div class="p+">
                 <span class="fs-headline display-block text-center">My Video</span>
                 <div>
-                    <video ng-src="{{localVdoURL}}" width="320" muted="true" autoplay></video>
+                    <video ng-src="{{localVdoURL}}" width="240" muted="true" autoplay></video>
                 </div>
             </div>
         </div>
         <div flex-item="8">
             <div class="p+"><span class="fs-headline display-block">Peer's Video</span>
-            
-                <video ng-src="{{peerVdoURL}}" id="peerVideo" autoplay></video>
+
+                <video ng-src="{{peerVdoURL}}" id="peerVideo" width="480" autoplay ></video>
                  <button ng-click="endCall()" class="btn btn--m btn--orange btn--raised" lx-ripple>End Call</button>
             </div>
         </div>
     </div>
-
+    </span>
+        </div>
+    </lx-dialog>
+<!-- Dialog Boxes for Showing Status Messages -->
 
     <lx-dialog class="dialog dialog--l" id="statusModal">
         <div class="dialog__content p++">
@@ -45,3 +51,4 @@
 
         </div>
     </lx-dialog>
+

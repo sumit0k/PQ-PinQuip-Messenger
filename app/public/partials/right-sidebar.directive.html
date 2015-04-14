@@ -1,0 +1,55 @@
+		<header class="card">
+			<div class="toolbar  bgc-orange-400 tc-white-1 pb+">
+				<div class="toolbar__left">
+					<button class="btn btn--m btn--blue btn--fab mr back" lx-ripple lx-tooltip="Back" tooltip-position="bottom"><i class="mdi mdi-chevron-left"></i></button>
+				</div>
+		    	<span class="toolbar__label fs-title"></span>
+		    	<div class="toolbar__right">
+		    		<button class="btn btn--m btn--green btn--fab mr" ng-click="close()" lx-ripple lx-tooltip="Close" tooltip-position="bottom"><i class="mdi mdi-close"></i></button>
+				</div>
+			</div>
+		</header>
+		<div class="bgc-light-blue-100" id="profile">
+      <div class="card__img card__img--top">
+          <img src="/images/flat.png" ng-src="{{right.activeContact.image}}">
+          <span class="fs-title tc-white-1 display-block">{{right.activeContact.name||'PinQuip Messenger'}}</span>
+      </div>
+
+      <div class="p">
+          <span class="fs-subhead tc-black-2 display-block emojitext">{{right.activeContact.status||'Feeling Happy :smile: :laughing:'}}</span>
+          <div class="paragraph fs-body-2 tc-black-1 p+">
+          	<div flex-container="row">
+          		<div flex-item="4">
+          			<b>Designation</b>
+          		</div>
+          		<div flex-item="8">
+          			{{right.activeContact.designation}}
+          		</div>
+          	</div>
+          	<div flex-container="row">
+          		<div flex-item="4">
+          			<b>Organisation</b>
+          		</div>
+          		<div flex-item="8">
+          			{{right.activeContact.organisation}}
+          		</div>
+          	</div>
+          	<div flex-container="row">
+          		<div flex-item="4">
+          			<b>Email</b>
+          		</div>
+          		<div flex-item="8">
+          			{{right.activeContact.email}}
+          		</div>
+          	</div>
+          	<div flex-container="row">
+          		<div flex-item="4">
+          			<b>Phone</b>
+          		</div>
+          		<div flex-item="8">
+          			{{right.activeContact.phone}}
+          		</div>
+          	</div>
+          </div>
+      </div>
+  </div>
