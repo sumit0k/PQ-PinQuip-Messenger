@@ -24,7 +24,7 @@ background-color: #dfdfdf;
 }
 /*main chat body*/
 .app {
-    height: calc(100% - 100px);
+    height: calc(100% - 10px);
     position: relative;
     margin: 10px auto;
     top: 0px;
