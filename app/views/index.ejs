@@ -2,29 +2,77 @@
 <html ng-app="pinquip-messenger" >
    <head>
 		<title>PQ: PinQuip Messenger</title>
-		<!-- LUMX UI Framework -->
-		<link rel="stylesheet" href="libs/lumx/dist/lumx.css">
-		<!-- MDI Icon CSS -->
-		<link rel="stylesheet" href="libs/mdi/css/materialdesignicons.css">
+		<link rel="stylesheet" href="libs/materialize/dist/css/materialize.min.css">
+		<link rel="stylesheet" href="libs/angular-material/angular-material.min.css">
+		<!-- <link rel="stylesheet" href="libs/ng-mfb/mfb/src/mfb.min.css"> -->
+		<link rel="shortcut icon" type="image/png" href="/images/flat.png">
+		<!-- Group Icons -->
+		<!-- <link rel="stylesheet" href="fontello/css/fontello.css"> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.css"> -->
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.js"></script> -->
 		<!-- Main Application CSS -->
 		<link rel="stylesheet" href="css/app.css">
-		<link rel="shortcut icon" type="image/png" href="/images/flat.png">
+		<link rel="stylesheet" href="css/emoji.min.css">
+		<!-- File Upload CSS -->
+		<!-- <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.css"> -->
+		<!-- blueimp Gallery styles -->
+		<link rel="stylesheet" href="libs/blueimp-gallery/css/blueimp-gallery.css">
+		<!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
+		<link rel="stylesheet" href="css/jquery.fileupload.css">
+		<link rel="stylesheet" href="css/jquery.fileupload-ui.css">
+		<!-- CSS adjustments for browsers with JavaScript disabled -->
+		<noscript><link rel="stylesheet" href="css/jquery.fileupload-noscript.css"></noscript>
+		<noscript><link rel="stylesheet" href="css/jquery.fileupload-ui-noscript.css"></noscript>
+   </head>
+	<body class="ui"><p style="display: none"><%= ip %></p>
+		<div class="app-wrapper">
+			<!-- main header bar containing the window controls -->
+			<header-bar></header-bar>
+			<!-- Lumx new body Application Body containg all the contents -->
+			<div class="app" ng-controller="MainCtrl" layout="column">
+			<section layout="row" flex>
+			<!-- left sidebar comprises 30% on pc and when used in mobile should reduce to 10% showing just the pictures and an option to expand hiding message view contains collapse button too-->
+				<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"><left-sidebar></left-sidebar></md-sidenav>
+				<!-- message window coprises 70% on pc-->
+			  <md-content flex><message-body></message-body></md-content>
+			  <!-- Right sidebar for contact info and settings menu -->
+			  <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right"><right-sidebar></right-sidebar></md-sidenav>
+			  </section>
+			</div>
+		</div>
 		<!-- Scripts -->
 		<script src="libs/jquery/dist/jquery.min.js"></script>
-		<script src="libs/velocity/velocity.min.js"></script>
-		<!-- <script src="libs/velocity/velocity.ui.min.js"></script> -->
-		<script src="libs/moment/min/moment-with-locales.js"></script>
+		<!-- <script src="libs/file/jquery.ui.widget.js"></script> -->
 		<script src="libs/angular/angular.min.js"></script>
-		<script src="libs/lumx/dist/lumx.min.js"></script>
+		<!-- <script src="libs/angular/angular-cookie.js"></script> -->
+		<script src="libs/angular-material/angular-material.min.js"></script>
+		<script src="libs/angular-aria/angular-aria.min.js"></script>
+		<script src="libs/angular-animate/angular-animate.min.js"></script>
+		<script src="libs/angular-sanitize/angular-sanitize.min.js"></script>
+		<!-- <script src="libs/ng-mfb/src/mfb-directive.js"></script> -->
+		<!-- <script src="libs/ng-mfb/mfb/src/mfb.min.js"></script> -->
+		<script src="libs/materialize/dist/js/materialize.js"></script>
+		<script src="libs/angular-materialize.js"></script>
+
 		<!-- PouchDB script for pouchdb wrapper for indexed DB -->
 		<script src="libs/pouchdb-3.3.1.min.js"></script>
+		<!-- <script src="libs/pouchdb.quick-search.min.js"></script> -->
+		<script src="js/angular-pouchdb.js"></script>
 		<!-- DexieJS script for dexie wrapper for indexed DB -->
 		<!-- <script src="libs/Dexie.js"></script> -->
 		<!-- PeerJS Script for PeerJS client -->
 		<script src="libs/peer.js"></script>
-		<!-- Font Script for supporting different devices -->
-		<script src="libs/webfont.js"></script>
 		<!-- Main App Script -->
+		<script src="js/blueimp-angular.js"></script>
+		<!-- <script src="js/config.js"></script>
+		<script src="js/emoji.min.js"></script> -->
+		<script type="text/javascript" src="libs/js/app.js"></script>
+    <script type="text/javascript" src="libs/js/config.js"></script>
+    <script type="text/javascript" src="libs/js/util.js"></script>
+    <script type="text/javascript" src="libs/js/jquery.emojiarea.js"></script>
+    <script type="text/javascript" src="libs/js/emojiDirectives.js"></script>
+    <script type="text/javascript" src="libs/js/emojiFilters.js"></script>
+    <script type="text/javascript" src="libs/js/nanoscroller.js"></script>
 		<script src="js/app-main.js"></script>
 		<!-- Custom Directives -->
 		<script src="js/header-bar.directive.js"></script>
@@ -32,37 +80,28 @@
 		<script src="js/left-sidebar.directive.js"></script>
 		<script src="js/pane-footer.directive.js"></script>
 		<script src="js/right-sidebar.directive.js"></script>
-		<script src="js/pouchDB-Populate.js"></script>
+		<!-- <script src="js/pouchDB-Populate.js"></script> -->
+		<!-- Angular Scripts -->
+		<!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+		<script src="libs/blueimp-load-image/js/load-image.all.min.js"></script>
+		<!-- The Canvas to Blob plugin is included for image resizing functionality -->
+		<script src="libs/blueimp-canvas-to-blob/js/canvas-to-blob.min.js"></script>
+		<!-- blueimp Gallery script -->
+		<script src="libs/blueimp-gallery/js/jquery.blueimp-gallery.min.js"></script>
+		<script src="libs/uploader.min.js"></script>
+		<!-- <script src="js/blueimp-angular.js"></script> -->
+		<script src="js/nguploadform.directive.js"></script>
 		<!-- <script src="js/db-populate.js"></script> -->
 		<!-- Script for Peer functionality -->
-		<script src="js/pq-videochat.directive.js"></script>
-
+		<!-- <script src="js/pq-videochat.directive.js"></script> -->
 		<!-- Emoji Area CSS -->
-		<link rel="stylesheet" href="css/jquery.emojiarea.css">
+		<!-- <link rel="stylesheet" href="css/jquery.emojiarea.css"> -->
 		<!-- Emoji Parser for texts around the application -->
-		<script src="js/packs/jquery.emoji.js"></script>
+		<!-- <script src="js/packs/jquery.emoji.js"></script> -->
 		<!-- EmojiArea creator -->
-		<script src="js/packs/jquery.emojiarea.js"></script>
+		<!-- <script src="js/packs/jquery.emojiarea.js"></script> -->
 		<!-- Emoji Database separated in groups -->
-		<script src="js/packs/basic/emojis.js"></script>
-		<!-- Group Icons -->
-		<link rel="stylesheet" href="fontello/css/fontello.css">
-   </head>
-	<body class="ui">
-		<div class="app-wrapper">
-			<!-- main header bar containing the window controls -->
-			<header-bar></header-bar>
-			<!-- Application Body containg all the contents -->
-			<div class="app" ng-class="{two:infoBar===0,three:infoBar===1}" ng-controller="MainCtrl">
-				<!-- left sidebar comprises 30% on pc and when used in mobile should reduce to 10% showing just the pictures and an option to expand hiding message view contains collapse button too -->
-				<left-sidebar></left-sidebar>
-				<!-- message window coprises 70% on pc -->
-				<message-body></message-body>
-				<!-- Right sidebar for contact info and settings menu -->
-				<right-sidebar></right-sidebar>
-			</div>
-		</div>
-		<!-- Contains all the Dialog Boxes Used in Application -->
-		<dialog-boxes></dialog-boxes>
+		<!-- <script src="js/packs/basic/emojis.js"></script> -->
 	</body>
 </html>
+

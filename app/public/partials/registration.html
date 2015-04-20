@@ -1,0 +1,67 @@
+<md-dialog aria-label="Registration" align="center" md-theme="altTheme">
+  <md-subheader class="md-sticky-no-effect grey lighten-2">Registration</md-subheader>
+  <md-content class="sticky-container" align="left">
+    <div class="dialog-content">
+     <form class="col s12">
+      <div class="row">
+        <div class="input-field col s6">
+          <i class="mdi-action-account-circle prefix"></i>
+          <input id="firstname" type="text">
+          <label for="firstname">First Name</label>
+        </div>
+        <div class="input-field col s6">
+          <i class="mdi-action-perm-identity prefix"></i>
+          <input id="lastname" type="text">
+          <label for="lastname">Last Name</label>
+        </div>
+      </div>
+            <div class="row">
+        <div class="input-field col s6">
+          <i class="mdi-communication-phone prefix"></i>
+          <input id="phone" type="text" maxlength="10" required pattern={}>
+          <label for="phone">Phone</label>
+        </div>
+        <div class="input-field col s6">
+          <i class="mdi-communication-email prefix"></i>
+          <input id="email" type="email" class="validate" length="80">
+          <label for="email">Email</label>
+        </div>
+      </div>
+                  <div class="row">
+        <div class="input-field col s6">
+          <i class="mdi-action-credit-card prefix"></i>
+          <input id="designation" type="text" class="validate">
+          <label for="designation">Designation</label>
+        </div>
+        <div class="input-field col s6">
+          <i class="mdi-social-location-city prefix"></i>
+          <input id="organisation" type="text" class="validate">
+          <label for="organisation">Organisation</label>
+        </div>
+      </div>
+                        <div class="row">
+        <div class="input-field col s6">
+          <i class="mdi-action-loyalty prefix"></i>
+          <input id="designation" type="text" class="validate">
+          <label for="designation">Username</label>
+        </div>
+            <div class="file-field input-field col s6">
+      <input class="file-path validate" type="text"/>
+      <div class="btn">
+        <i class="mdi-action-face-unlock"> Photo</i>
+        <input type="file" />
+      </div>
+    </div>
+      </div>
+    </form>
+    </div>
+  </md-content>
+  <div class="md-actions" layout="row">
+    <md-button ng-click="close()">
+     Exit
+    </md-button>
+    <md-button ng-click="register()" class="md-primary">
+      Proceed
+    </md-button>
+  </div>
+</md-dialog>

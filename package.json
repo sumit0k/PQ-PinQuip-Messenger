@@ -10,8 +10,11 @@
 		"ejs": "~0.8.5",
 		"express": "^4.x.x",
 		"express-pouchdb": "^0.14.0",
+		"jquery-file-upload-middleware": "^0.1.7",
 		"peer": "0.2.8",
-		"pouchdb": "^3.3.1"
+		"pouchdb": "^3.3.1",
+		"sqldown": "^1.2.0",
+		"sqlite3": "^3.0.5"
 	},
 	"scripts": {
 		"start": "node app/app.js"

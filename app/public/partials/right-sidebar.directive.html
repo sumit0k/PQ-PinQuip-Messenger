@@ -1,21 +1,15 @@
-<div class="pane drawer-container drawer-container-left drawer-container-panel bgc-white-1">
-	<div class="drawer drawer-info ">
-		<header class="pane-header">
-			<div class="toolbar bgc-orange-400 tc-white-1">
-				<div class="toolbar__left">
-					<button class="btn btn--m btn--blue btn--fab mr back" lx-ripple lx-tooltip="Back" tooltip-position="bottom"><i class="mdi mdi-chevron-left"></i></button>
-				</div>
-		    	<span class="toolbar__label fs-title"></span>
-		    	<div class="toolbar__right">
-		    		<button class="btn btn--m btn--green btn--fab mr" ng-click="close()" lx-ripple lx-tooltip="Close" tooltip-position="bottom"><i class="mdi mdi-close"></i></button>
-				</div>
-			</div>
-		</header>
-		<div class="pane-subheader">Vikash Kumar</div>
-		<div align="center">
-			<img src="/images/DP/9806540120.jpg" class="img-round" width="200" height="200">
-		</div>
-		<div class="emojitext">feeling happy :smile: :smile: :smile: :smile: :laughing: :snowman:</div>
-		<pq-video-chat></pq-video-chat>
-	</div>
-</div>
+<md-toolbar class="grey lighten-3 grey-text text-darken-2">
+  <h1 class="md-toolbar-tools">Sidenav Right</h1>
+</md-toolbar>
+      <md-content  layout-padding>
+        <form>
+          <md-input-container>
+            <label for="testInput">Test input</label>
+            <input type="text" id="testInput"
+                   ng-model="data" md-sidenav-focus>
+          </md-input-container>
+        </form>
+        <md-button ng-click="close()" class="md-primary">
+          Close Sidenav Right
+        </md-button>
+      </md-content>

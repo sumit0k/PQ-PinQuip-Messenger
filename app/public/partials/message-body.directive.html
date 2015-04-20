@@ -1,62 +1,43 @@
-<div id="main" class="pane pane-chat" >
-  <header class="pane-header pane-chat-header">
-    <div class="toolbar bgc-green-600 tc-white-1">
-      <div class="toolbar__left">
-        <div class="avatar">
-          <img src="/images/DP/9806540120.jpg" ng-src="{{activeContact.image}}" class="img-round">
-        </div>
-      </div>
-      <span class="toolbar__label fs-title ml">{{activeContact.name}}</span>
-      <div class="toolbar__right">
-        <div class="fab mr">
-          <button class="fab__primary btn btn--l btn--red btn--fab" lx-ripple>
-            <i class="mdi mdi-attachment"></i>
-            <i class="mdi mdi-chevron-left"></i>
-          </button>
-          <div class="fab__actions fab__actions--left ">
-            <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="File" tooltip-position="bottom"><i class="mdi mdi-file"></i></button>
-            <button class="btn btn--l btn--black btn--fab"  lx-ripple lx-tooltip="Image" tooltip-position="bottom"><i class="mdi mdi-message-image"></i></button>
-            <button class="btn btn--l btn--black btn--fab"  lx-ripple lx-tooltip="Video" tooltip-position="bottom"><i class="mdi mdi-message-video"></i></button>
-            <button class="btn btn--l btn--black btn--fab"  lx-ripple lx-tooltip="Audio" tooltip-position="bottom"><i class="mdi mdi-microphone"></i></button>
-            <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="Contact" tooltip-position="bottom"><i class="mdi mdi-account-box"></i></button>
-          </div>
-        </div>
-        <button class="btn btn--m btn--blue btn--fab mr" lx-ripple lx-tooltip="Video Call" tooltip-position="bottom"><i class="mdi mdi-play-box-outline"></i></button>
-        <button class="btn btn--m btn--amber btn--fab mr" lx-ripple lx-tooltip="Audio Call" tooltip-position="bottom"><i class="mdi mdi-phone" ></i></button>
-      <lx-dropdown position="right" from-top="false">
-        <button class="btn btn--l btn--white btn--icon" lx-ripple lx-dropdown-toggle lx-tooltip="Options" tooltip-position="bottom">
-          <i class="mdi mdi-dots-vertical"></i>
-        </button>
-        <lx-dropdown-menu>
-          <ul>
-            <li ng-click="info()"><a class="dropdown-link" >Contact Info</a></li>
-            <li><a class="dropdown-link">Block</a></li>
-            <li class="dropdown-divider"></li>
-            <li><a class="dropdown-link">Email Conversation</a></li>
-            <li><a class="dropdown-link">Clear Conversation</a></li>
-            <li><a class="dropdown-link">Delete Conversation</a></li>
-            <li><a class="dropdown-link">Archive Conversation</a></li>
-          </ul>
-        </lx-dropdown-menu>
-      </lx-dropdown>
-      </div>
-    </div>
-  </header>
-  <div id="pane-main" class="pane-body pane-chat-body" lx-scrollbar>
-    <div class="message-list">
-      <div class="msg" ng-repeat="text in activeContact.messages">
-        <div class="message" ng-class="message-system:text.type===system, message-in:text.type===in,message-out:text.type===out">
+<md-toolbar layout-padding layout-align="space-between center" layout="row" class="grey lighten-3 grey-text text-darken-2"><div hide-gt-md ng-click="toggleLeft()">    <a class="waves-effect waves-teal btn-flat" aria-label="Chat List" title="Chat List"><i class="mdi-navigation-menu"></i></a></div>
+        <div> <img src="images/DP/9806540120.jpg" alt="" class="circle responsive-img" width="48px"></div>
+        <!-- <h1 class="md-toolbar-tools" hide-gt-sm> </h1> -->
+        <div show-gt-sm><h1 class="md-toolbar-tools">Vikash Kumar</h1></div>
+  <div>
+    <a class="waves-effect waves-teal btn-floating yellow darken-1" aria-label="File Upload" title="File Upload"><md-tooltip>
+          File Upload
+        </md-tooltip><i class="mdi-file-attachment"></i></a>
+    <a class="waves-effect waves-teal btn-floating green" aria-label="Video Call" title="Video Call"><md-tooltip>
+          Video Call
+        </md-tooltip><i class="mdi-av-videocam"></i></a>
+          <a class="waves-effect waves-teal btn-floating blue" aria-label="Audio Call" title="Audio Call"><md-tooltip>
+          Audio Call
+        </md-tooltip><i class="mdi-communication-phone"></i></a>
+<a class="dropdown-button waves-effect waves-teal btn-flat" data-beloworigin="true" data-activates="dropdown2" data-hover="true"  href="javascript:void(0);" dropdown data-gutter="320" data-constrainwidth="false"><i class="small mdi-navigation-more-vert"></i></a>
+   <ul id="dropdown2" class="dropdown-content">
+    <li ng-click="toggleRight()"><a href="#!">Contact info</a></li>
+    <li><a href="#!">Block</a></li>
+    <li class="divider"></li>
+    <li><a href="#!">Clear Conversation</a></li>
+  </ul>
+   <!--    <a ng-click="close()" class="waves-effect waves-teal btn-flat" aria-label="Hide" title="Hide" hide-gt-md><md-tooltip>
+          Hide
+        </md-tooltip><i class="small mdi-navigation-chevron-left"></i></a> -->
+  </div>
+</md-toolbar>
+<div layout="column" layout-fill layout-align="top center">
+    <div class="message-list ">
+      <div class="msg" ng-repeat="text in message.message.messages">
+        <div class="message" ng-class=" {'message-system' : text.type == 'system' , 'message-in' : text.type == 'in','message-out' : text.type == 'out' }">
           <span class="message-system-body" ng-show="text.type==='system'">
-            <span class="emojitext">{{text.body}}</span>
+            <span >{{text.body}}</span>
           </span>
           <div class="bubble bubble-text" ng-hide="text.type==='system'">
             <div class="message-text">
-
-                <span class="emojitext"><pre>{{text.body}}</pre></span>
-
+                <span class="emojitext"><pre ng-bind-html="text.body| colonToSmiley"></pre></span>
               <div class="message-meta">
-                <span></span>
-                <span class="message-datetime">{{text.time}}</span>
+              <span></span>
+                <span class="message-datetime">{{text.meta}}</span>
+                <!-- <span class="message-datetime">{{text.meta|date:'h:mma'}}</span> -->
                 <span></span>
               </div>
             </div>
@@ -64,8 +45,5 @@
         </div>
       </div>
     </div>
-  </div>
-  <!-- contains input box and emojiArea -->
-  <!-- work on stickers is going on -->
-  <pane-footer></pane-footer>
+<pane-footer></pane-footer>
 </div>

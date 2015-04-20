@@ -1,13 +1,32 @@
-<div class="card bgc-teal-500 tc-white-1 pb+">
-    <div class="toolbar bgc-teal-500 tc-white-1">
-        <div class="toolbar__left">
-          <img src="/images/flat.png" width="50" height="50" style="z-index:1">
-        </div>
-        <span class="toolbar__label fs-title"></span>
-        <button class="btn btn--m btn--orange btn--raised mr" ng-click="winMin()" lx-ripple lx-tooltip="Minimise" tooltip-position="bottom"><i class="mdi mdi-minus"></i></button>
-        <button class="btn btn--m btn--blue btn--raised mr" ng-click="winMax()" lx-ripple lx-tooltip="Maximise" tooltip-position="bottom"><i class="mdi mdi-monitor"></i></button>
-        <button class="btn btn--m btn--green btn--raised mr" ng-click="winFul()" lx-ripple lx-tooltip="FullScreen" tooltip-position="bottom"><i class="mdi mdi-fullscreen"></i></button>
-        <button class="btn btn--m btn--amber btn--raised mr" ng-click="winRot()" lx-ripple lx-tooltip="Rotate" tooltip-position="bottom"><i class="mdi mdi-sync"></i></button>
-        <button class="btn btn--m btn--red btn--raised mr" ng-click="winClo()" lx-ripple lx-tooltip="Close" tooltip-position="bottom"><i class="mdi mdi-close"></i></button>
-    </div>
-</div>
+<md-toolbar layout-align="space-between start" layout="row" style="  box-shadow: none;">
+        <div><img ng-src="/images/flat.png" alt="PinQuip" width="50" height="50"/></div>
+        <!-- <h1 class="md-toolbar-tools" hide-gt-sm> </h1> -->
+        <div><h1 class="md-toolbar-tools" hide-sm>PinQuip Messenger</h1></div>
+  <div>
+  <md-button class="md-icon-button md-accent" aria-label="Minimize" title="Minimize" ng-click="winMin()">
+  <md-tooltip>
+          Minimize
+        </md-tooltip>
+    <md-icon class="mdi-content-remove"></md-icon>
+  </md-button>
+  <md-button class="md-icon-button" aria-label="Maximize" title="Maximize" ng-click="winMax()">
+  <md-tooltip>
+          Maximize
+        </md-tooltip>
+    <md-icon class="mdi-image-crop-16-9"></md-icon>
+  </md-button>
+  <md-button class="md-icon-button" aria-label="Full Screen" title="Full Screen" ng-click="winFul()"><md-tooltip>
+          FullScreen
+        </md-tooltip>
+    <md-icon class="mdi-navigation-fullscreen"></md-icon>
+  </md-button>
+    <md-button class="md-icon-button" aria-label="Rotate" title="Rotate" ng-click="winRot()"><md-tooltip>
+          Rotate
+        </md-tooltip>
+    <md-icon class="mdi-device-screen-rotation"></md-icon>
+  </md-button>
+  <a class="waves-effect waves-light btn red" ng-click="winClo()" aria-label="Close" title="Close"><md-tooltip>
+          Close
+        </md-tooltip><i class="mdi-navigation-close"></i></a>
+  </div>
+</md-toolbar>

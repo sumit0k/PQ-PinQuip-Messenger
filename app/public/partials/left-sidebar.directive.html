@@ -1,62 +1,59 @@
-<div id="side" class="pane pane-list" >
-  <header class="pane-header">
-    <div class="toolbar bgc-green-400 tc-white-1">
-      <div class="toolbar__left">
-        <div class="avatar" id="icon-user-default">
-          <img ng-src="{{myImage}}" src="/images/DP/8109848253.jpg" class="img-round">
+<md-toolbar layout-padding layout-align="space-between center" layout="row" class="grey lighten-3 grey-text text-darken-2">
+        <div> <img src="images/DP/8109848253.jpg" alt="" class="circle responsive-img" width="48px"></div>
+        <!-- <h1 class="md-toolbar-tools" hide-gt-sm> </h1> -->
+        <!-- <div ><h1 class="md-toolbar-tools" hide-sm>Sumit Kumar</h1></div> -->
+  <div>
+<!--     <a class="waves-effect waves-teal btn-floating yellow darken-1" aria-label="New Chat" title="New Chat"><md-tooltip>
+          New Chat
+        </md-tooltip><i class="mdi-communication-chat"></i></a>
+    <a class="waves-effect waves-teal btn-floating green" aria-label="New Group" title="New Group"><md-tooltip>
+          New Group
+        </md-tooltip><i class="mdi-social-group-add"></i></a>
+          <a class="waves-effect waves-teal btn-floating blue" aria-label="New Broadcast" title="New Broadcast"><md-tooltip>
+          New Broadcast
+        </md-tooltip><i class="mdi-action-settings-remote"></i></a> -->
+<a class="dropdown-button waves-effect waves-teal btn-flat" data-beloworigin="true" data-activates="dropdown1" data-hover="true"  href="javascript:void(0);" dropdown data-constrainwidth="false"><i class="small mdi-navigation-more-vert"></i></a>
+   <ul id="dropdown1" class="dropdown-content">
+    <li><a href="#!">Contacts</a></li>
+    <li ng-click="registrationForm($event)"><a href="#!">Profile</a></li>
+    <li><a href="#!">Status</a></li>
+    <li class="divider"></li>
+    <li><a href="#!">Change Server</a></li>
+  </ul>
+   <!--    <a ng-click="close()" class="waves-effect waves-teal btn-flat" aria-label="Hide" title="Hide" hide-gt-md><md-tooltip>
+          Hide
+        </md-tooltip><i class="small mdi-navigation-chevron-left"></i></a> -->
+  </div>
+</md-toolbar>
+  <nav>
+    <div class="nav-wrapper">
+      <form>
+        <div class="input-field">
+          <input id="search" type="search" required>
+          <label for="search"><i class="mdi-action-search"></i></label>
+          <i class="mdi-navigation-close"></i>
         </div>
-      </div>
-      <span class="toolbar__label fs-title"></span>
-      <div class="toolbar__right">
-        <button class="btn btn--m btn--blue btn--fab mr" lx-ripple lx-tooltip="New Chat" tooltip-position="bottom"><i class="mdi mdi-comment-plus-outline"></i></button>
-        <button class="btn btn--m btn--amber btn--fab mr" lx-ripple lx-tooltip="New Group" tooltip-position="bottom"><i class="mdi mdi-account-multiple-plus"></i></button>
-        <button class="btn btn--m btn--orange btn--fab mr" lx-ripple lx-tooltip="New Broadcast" tooltip-position="bottom"><i class="mdi mdi-theater"></i></button>
-        <lx-dropdown position="right" from-top="false">
-          <button class="btn btn--l btn--white btn--icon" lx-ripple lx-dropdown-toggle lx-tooltip="Options" tooltip-position="bottom"><i class="mdi mdi-dots-vertical"></i></button>
-          <lx-dropdown-menu >
-            <ul>
-              <li><a class="dropdown-link">Contacts</a></li>
-              <li><a class="dropdown-link">Settings</a></li>
-              <li><a class="dropdown-link">Status</a></li>
-              <li class="dropdown-divider"></li>
-              <li><a class="dropdown-link">Help</a></li>
-              <li ng-click="opendDialog('server_select')"><a class="dropdown-link">Change Server</a></li>
-            </ul>
-          </lx-dropdown-menu>
-        </lx-dropdown>
-      </div>
+      </form>
     </div>
-  </header>
-  <div class="pane-subheader subheader-search">
-    <lx-search-filter model="searchFilter.second" position="right" theme="light" filter-width="100%" placeholder="Search"></lx-search-filter>
-  </div>
-  <div class="pane-body" id="pane-side" lx-scrollbar style="max-height: 500px;" >
-    <ul class="list mt" >
-      <li class="list-row list-row--has-separator" ng-repeat="contact in Contacts" ng-class="{active: left.isSelected({{contact.id}})}" ng-click="left.selectTab({{contact.id}})">
-        <div class="list-row__primary">
-          <img ng-src="{{contact.image}}" src="/images/DP/s.jpg" width="55" height="55" class="img-round">
-        </div>
-        <div class="list-row__content">
-          <span class="display-block">{{contact.name}}</span>
-          <span class="display-block fs-body-1 tc-black-2">{{contact.lastmessage}}</span>
-        </div>
-        <div class="list-row__secondary">
-          <div class="fab">
-            <button class="fab__primary btn btn--xl btn--red btn--fab" lx-ripple lx-tooltip="Lorem Ipsum" tooltip-position="top">
-              <i class="mdi mdi-menu-left"></i>
-              <i class="mdi mdi-plus"></i>
-            </button>
-
-            <div class="fab__actions fab__actions--left">
-              <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="Delete Conversation" tooltip-position="top"><i class="mdi mdi-delete"></i></button>
-              <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="Archive Conversation" tooltip-position="top"><i class="mdi mdi-package"></i></button>
-              <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="Clear Conversation" tooltip-position="top"><i class="mdi mdi-multiplication"></i></button>
-              <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="Email Conversation" tooltip-position="top"><i class="mdi mdi-link"></i></button>
-              <button class="btn btn--l btn--black btn--fab" lx-ripple lx-tooltip="Block Contact" tooltip-position="top"><i class="mdi mdi-block-helper"></i></button>
-            </div>
-          </div>
-        </div>
-      </li>
+  </nav>
+<md-content>
+  <table class="bordered hoverable">
+  <tbody>
+    <tr class="row">
+      <td class="col s2"><img src="images/DP/9806540120.jpg" alt="" class="circle responsive-img" width="48px"></td>
+      <td class="col s10"><name>Eclair</name><message>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</message><metal>11:10 AM</metal></td>
+<!--     <td class="col s2"> <div class="fixed-action-btn">
+    <a class="btn-floating red">
+      <i class="mdi-editor-mode-edit"></i>
+    </a>
+    <ul>
+      <li><a class="btn-floating red"><i class="mdi-editor-insert-chart"></i></a></li>
+      <li><a class="btn-floating yellow darken-1"><i class="mdi-editor-format-quote"></i></a></li>
+      <li><a class="btn-floating green"><i class="mdi-editor-publish"></i></a></li>
+      <li><a class="btn-floating blue"><i class="mdi-editor-attach-file"></i></a></li>
     </ul>
-  </div>
-</div>
+  </div></td> -->
+    </tr>
+  </tbody>
+  </table>
+</md-content>
