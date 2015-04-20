@@ -4,14 +4,8 @@ var express = require('express'),
 	path = require('path'),
 	cookieParser = require('cookie-parser'),
 	bodyParser = require('body-parser'),
-	PeerServer = require('peer').PeerServer,
 	PouchDB = require('pouchdb'),
 	routes = require('./routes'),
-	// creating a PeerJS server at port 9000
-	pserver = new PeerServer({
-		port: process.env.PORT || 9000,
-		path: ''
-	}),
 	//initialising the app
 	app = express(),
 	//PouchDB = require('pouchdb'),
@@ -73,27 +67,7 @@ app.use('/db', require('express-pouchdb')(InMemPouchDB));
 // getting port for expressJS server 3000
 // process.env.PORT for heroku
 app.set('port', process.env.PORT || 3000);
-var os = require('os');
-
-var interfaces = os.networkInterfaces();
-var addresses = [];
-for (var k in interfaces) {
-	for (var k2 in interfaces[k]) {
-		var address = interfaces[k][k2];
-		if (address.family === 'IPv4' && !address.internal) {
-			addresses.push(address.address);
-		}
-	}
-}
-
-console.log(addresses[0]);
-
-app.get('/', function (req, res) {
-	var ip = addresses[0];
-	res.render('index', {
-		ip: ip
-	});
-});
+app.get('/', routes.index);
 var server = require('http').createServer(app, function () {
 	console.log('Server variable');
 });
