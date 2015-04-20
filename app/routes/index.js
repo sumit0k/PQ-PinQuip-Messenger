@@ -3,7 +3,6 @@
 
 /* GET home page. */
 exports.index = function (req, res) {
-	var ip = addresses[0];
 	res.render('index');
 };
 // // angular page
